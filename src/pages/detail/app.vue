@@ -1,18 +1,14 @@
 <template>
-    <div class="wrapper" @viewappear="onshow">
+    <div class="wrapper">
         <image :src="logo" class="logo" />
-        <text class="greeting" @click="clear">The environment is ready!</text>
-        <HelloWorld/>
-        <goto target="list">
-            <text>跳转到list页</text>
-        </goto>
-
+        <text @click="back">返回</text>
     </div>
 </template>
 
 <script>
     import RouterStackMixin from '@/mixins/routerStack.js'
-    import HelloWorld from '@/components/HelloWorld'
+    import Router from '../../../plugins/router'
+    
     import Goto from '@/components/Goto'
     export default {
         name: 'App',
@@ -30,19 +26,12 @@
             })
         },
         methods: {
-            clear() {
-                const storage = weex.requireModule('storage')
-            },
-            onshow() {
-                var modal = weex.requireModule('modal')
-                modal.toast({
-                    message: 'show',
-                    duration: 0.8
-                })
+
+            back() {
+                Router.back()
             }
         },
         components: {
-            HelloWorld,
             Goto
         }
     }

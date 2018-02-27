@@ -6,19 +6,53 @@
                 <image class="image" resize="cover" :src="img.src"></image>
             </div>
         </slider>
+        <text @click="show">{{test}}</text>
+        <goto target="detail">
+            <text>跳转到detail页</text>
+        </goto>
+        <text @click="back">返回</text>
     </div>
 </template>
 
 <script>
+    import RouterStackMixin from '@/mixins/routerStack.js'
+    import Router from '../../../plugins/router'
+    import Goto from '@/components/Goto'
+    
     export default {
+        mixins: [RouterStackMixin],
         data() {
             return {
                 imageList: [
                     { src: 'https://gd2.alicdn.com/bao/uploaded/i2/T14H1LFwBcXXXXXXXX_!!0-item_pic.jpg' },
                     { src: 'https://gd1.alicdn.com/bao/uploaded/i1/TB1PXJCJFXXXXciXFXXXXXXXXXX_!!0-item_pic.jpg' },
                     { src: 'https://gd3.alicdn.com/bao/uploaded/i3/TB1x6hYLXXXXXazXVXXXXXXXXXX_!!0-item_pic.jpg' }
-                ]
+                ],
+                test: 'show'
             }
+        },
+        ready(enterType) {
+            var modal = weex.requireModule('modal')
+            modal.toast({
+                message: 'enterType:' + enterType,
+                duration: 3.8
+            })
+        },
+        methods: {
+            show() {
+                let self = this
+                var modal = weex.requireModule('modal')
+                modal.toast({
+                    message: self.enterType,
+                    duration: 3.8
+                })
+            },
+            back() {
+                Router.back()
+            }
+        },
+        components:{
+            Goto
         }
     }
 </script>
