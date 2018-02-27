@@ -1,4 +1,5 @@
 const navigator = weex.requireModule('navigator')
+const baseUrl = 'http://192.168.31.10:8081'
 export default {
     go(page, callback) {
         const storage = weex.requireModule('storage')
@@ -14,9 +15,9 @@ export default {
                 storage.setItem('routerStack', JSON.stringify(routerStack), function ({ result, data }) {
                     if (result === 'success') {
                         if (typeof window === 'object') {
-                            navigator.push({ url: `http://10.100.0.39:8081/${page}.html` })
+                            navigator.push({ url: `${baseUrl}/${page}.html` })
                         } else {
-                            navigator.push({ url: `http://10.100.0.39:8081/dist/${page}.js` },function(event){
+                            navigator.push({ url: `${baseUrl}/dist/${page}.js` },function(event){
                                 var modal = weex.requireModule('modal')
                                 modal.toast({ message: 'callback: ' + event, duration: 3.8 })
                             })

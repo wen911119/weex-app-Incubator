@@ -21,7 +21,7 @@ const getEntryFile = (dir) => {
     
     if (stat.isFile() && fullpath.indexOf('entry.js')>-1) {
       let name = path.join(dir, path.basename(file, extname));
-      name = name.replace(/pages\/(.+)\/.+/,"$1")
+      name = name.replace(/Apps\/(.+)\/.+/,"$1")
       if(fullpath.indexOf('web.entry.js')>-1){
         webEntry[name] = fullpath;
       }else if(fullpath.indexOf('weex.entry.js')>-1){
