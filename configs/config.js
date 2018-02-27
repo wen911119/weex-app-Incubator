@@ -8,8 +8,6 @@ const config = {
   pluginFilePath: 'plugins/plugins.js',
   // router
   // common
-  templateDir: '.temp',
-  entryFilePath: 'entry.js',
   dev: {
     // Various Dev Server settings
     contentBase: ROOT,
