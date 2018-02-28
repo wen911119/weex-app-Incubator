@@ -12,18 +12,18 @@
     import Goto from '@/components/Goto'
     export default {
         name: 'App',
-        mixins: [RouterStackMixin],
+        // mixins: [RouterStackMixin],
         data() {
             return {
                 logo: 'https://gw.alicdn.com/tfs/TB1yopEdgoQMeJjy1XaXXcSsFXa-640-302.png',
             }
         },
-        ready(enterType) {
-            var modal = weex.requireModule('modal')
-            modal.toast({
-                message: enterType,
-                duration: 0.8
-            })
+        mounted() {
+            // var modal = weex.requireModule('modal')
+            // modal.toast({
+            //     message: this.$ENTERTYPE,
+            //     duration: 0.8
+            // })
         },
         methods: {
 

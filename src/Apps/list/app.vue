@@ -20,7 +20,7 @@
     import Goto from '@/components/Goto'
     
     export default {
-        mixins: [RouterStackMixin],
+        // mixins: [RouterStackMixin],
         data() {
             return {
                 imageList: [
@@ -31,24 +31,26 @@
                 test: 'show'
             }
         },
-        ready(enterType) {
-            var modal = weex.requireModule('modal')
-            modal.toast({
-                message: 'enterType:' + enterType,
-                duration: 3.8
-            })
+        mounted() {
+            // var modal = weex.requireModule('modal')
+            // modal.toast({
+            //     message: this.$ENTERTYPE,
+            //     duration: 3.8
+            // })
         },
         methods: {
             show() {
                 let self = this
                 var modal = weex.requireModule('modal')
                 modal.toast({
-                    message: self.enterType,
+                    message: self.$ENTERTYPE,
                     duration: 3.8
                 })
             },
             back() {
-                Router.back()
+                //Router.back()
+                document.getElementById("apps-box").className = 'apps-box';
+                history.back()
             }
         },
         components:{
