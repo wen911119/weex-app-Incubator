@@ -31,13 +31,6 @@
                 test: 'show'
             }
         },
-        mounted() {
-            // var modal = weex.requireModule('modal')
-            // modal.toast({
-            //     message: this.$ENTERTYPE,
-            //     duration: 3.8
-            // })
-        },
         methods: {
             show() {
                 let self = this
@@ -48,8 +41,7 @@
                 })
             },
             back() {
-                Router.push('detail')
-                //document.getElementById("apps-box").className = 'apps-box';
+                Router.back()
             }
         },
         components:{

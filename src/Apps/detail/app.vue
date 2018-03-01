@@ -19,11 +19,9 @@
             }
         },
         mounted() {
-            // var modal = weex.requireModule('modal')
-            // modal.toast({
-            //     message: this.$ENTERTYPE,
-            //     duration: 0.8
-            // })
+            setInterval(function(){
+                console.log('setInterval')
+            },1500)
         },
         methods: {
 

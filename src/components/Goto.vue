@@ -6,7 +6,6 @@
 
 <script>
     import router from '../../plugins/router.js'
-    const storage = weex.requireModule('storage')
     export default {
         props: {
             target: {
@@ -16,7 +15,7 @@
         },
         methods: {
             goto() {
-                router.go(this.target)
+                router.push(this.target)
             }
         }
     }
