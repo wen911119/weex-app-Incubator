@@ -19,7 +19,6 @@
             margin: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
         }
 
         body::before {
@@ -29,68 +28,11 @@
             color: transparent;
             display: block;
         }
-
-        .app {
-            width: 375px;
-            height: 100%;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .app- {
-            transform: translateX(0px) !important;
-        }
-
-        .app-list {
-            transform: translateX(-375px) !important;
-        }
-
-        .app-detail {
-            transform: translateX(-750px) !important;
-        }
     </style>
-    <script>
-        function matchUrlToApp() {
-            const page = location.pathname.replace('/', '').replace('.html', '')
-            document.getElementById("apps-box").className = 'app-' + page
-            // 判断该app的js在不在
-            const pagejs = document.getElementById('_app_script_' + page)
-            if (pagejs) {
-                // 已经存在了
-            } else {
-                var script = document.createElement('script');
-                script.src = '/' + page + '.web.js';
-                script.id = '_app_script_' + page
-                document.body.appendChild(script);
-            }
-        }
-        window.addEventListener('popstate', function (e) {
-            matchUrlToApp()
-        }, false);
-    </script>
 </head>
 
 <body>
-    <div id="apps-box" style="width: 1175px;height: 100%;overflow: hidden;display: flex;transform: translateZ(0);transition: transform .3s;">
-        <div class="app">
-            <div id="index">
-                index
-            </div>
-        </div>
-        <div class="app">
-            <div id="list">
-                list
-            </div>
-        </div>
-        <div class="app">
-            <div id="detail">
-                detail
-            </div>
-        </div>
-    </div>
-    <script>
-        matchUrlToApp()
-    </script>
+    <div id="root"></div>
 </body>
 <%= htmlWebpackPlugin.options.devScripts %>
 

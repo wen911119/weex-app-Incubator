@@ -1,20 +1,19 @@
 <template>
-    <app-shell>
-        <div class="wrapper" @viewappear="onshow">
+    <scroller>
+        <div class="wrapper">
             <image :src="logo" class="logo" />
             <text class="greeting" @click="clear">The environment is ready!</text>
             <HelloWorld/>
             <div class="hold">
-                <ul class="test-list">
-                    <li v-for="item of test" @click="goto">{{item}}</li>
-                </ul>
+                <text class="list-item" v-for="item of test" @click="goto">{{item}}</text>
             </div>
             <goto target="list">
                 <text>跳转到list页</text>
             </goto>
             <text @click="goto">跳到第二页</text>
+            <text @click="testAlert">testAlert</text>
         </div>
-    </app-shell>
+    </scroller>
 </template>
 
 <script>
@@ -40,7 +39,7 @@
             //     message: self.$ENTERTYPE,
             //     duration: 0.8
             // })
-            for (let i = 0; i < 1500; i++) {
+            for (let i = 0; i < 50; i++) {
                 this.test.push(i)
             }
         },
@@ -56,7 +55,11 @@
                 })
             },
             goto() {
+                console.log(1111111)
                 Router.push('list')
+            },
+            testAlert() {
+                alert()
             }
         },
         components: {
@@ -93,10 +96,10 @@
 
     .hold {
         background-color: #f5f5f5;
-        width: 100%;
+        width: 700px;
     }
 
-    .test-list li {
+    .list-item {
         background-color: #727272;
         color: #fff;
         height: 80px;

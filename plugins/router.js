@@ -15,16 +15,21 @@ export default {
         navigator.pop()
     },
     push(page) {
-        document.getElementById("apps-box").className = 'app-' + page
-        history.pushState({ a: Date.now() }, '', page + '.html');
-        const pagejs = document.getElementById('_app_script_' + page)
-        if (pagejs) {
-            // 已经存在了
-        } else {
-            var script = document.createElement('script');
-            script.src = '/' + page + '.web.js';
-            script.id = '_app_script_' + page
-            document.body.appendChild(script);
+        if (typeof window === 'object') {
+            // web 环境
+            if (window.self != window.top) {
+                // 在 iframe 中
+                window.parent.postMessage(page, '*')
+            }else if(false){
+                // 小程序webview
+            }else {
+                // 普通web
+                navigator.push({ url: `${baseUrl}/${page}.html` })
+            }
+        }else{
+            // weex 内
+            navigator.push({ url: `${baseUrl}/dist/${page}.js` })
         }
+
     }
 }

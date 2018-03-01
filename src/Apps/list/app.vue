@@ -48,9 +48,8 @@
                 })
             },
             back() {
-                //Router.back()
-                document.getElementById("apps-box").className = 'apps-box';
-                history.back()
+                Router.push('detail')
+                //document.getElementById("apps-box").className = 'apps-box';
             }
         },
         components:{

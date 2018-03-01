@@ -5,4 +5,4 @@ weex.init(Vue);
 
 
 const App = require('./app.vue');
-new Vue(Vue.util.extend({el: '#list'}, App))
+new Vue(Vue.util.extend({el: '#root'}, App))
