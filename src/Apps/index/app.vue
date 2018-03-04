@@ -1,47 +1,69 @@
 <template>
-    <scroller>
-        <div class="wrapper">
-            <image :src="logo" class="logo" />
-            <text class="greeting" @click="clear">The environment is ready!</text>
-            <HelloWorld/>
-            <div class="hold">
-                <text class="list-item" v-for="item of test" @click="goto">{{item}}</text>
-            </div>
-            <goto target="list">
-                <text>跳转到list页</text>
-            </goto>
-            <text @click="goto">跳到第二页</text>
-            <text @click="testAlert">testAlert</text>
+    <div class="flex flex-column">
+        <search-bar></search-bar>
+        <div class="flex-1 flex">
+            <scroller class="scroller flex-1">
+                <slider class="slider" interval="3000" auto-play="true">
+                    <div class="frame" v-for="img in imageList">
+                        <image class="image" resize="cover" :src="img.src"></image>
+                    </div>
+                </slider>
+                <div class="wrapper">
+                    <div class="hold">
+                        <text class="list-item" v-for="item of test" @click="goto">{{item}}</text>
+                    </div>
+                    <goto target="list">
+                        <text>跳转到list页</text>
+                    </goto>
+                    <text @click="goto">跳到第二页</text>
+                    <text @click="testAlert">testAlert</text>
+                </div>
+            </scroller>
         </div>
-    </scroller>
+    </div>
+
 </template>
 
 <script>
-    import HelloWorld from '@/components/HelloWorld'
-    import RouterStackMixin from '@/mixins/routerStack.js'
     import Goto from '@/components/Goto'
-    import AppShell from '@/components/AppShell'
     import Router from '../../../plugins/router'
-
+    import SearchBar from './components/search.vue'
+    const stream = weex.requireModule('stream')
     export default {
         name: 'App',
-        // mixins: [RouterStackMixin],
         data() {
             return {
                 logo: 'https://gw.alicdn.com/tfs/TB1yopEdgoQMeJjy1XaXXcSsFXa-640-302.png',
-                test: []
+                test: [],
+                imageList: [
+                    { src: 'https://gd2.alicdn.com/bao/uploaded/i2/T14H1LFwBcXXXXXXXX_!!0-item_pic.jpg' },
+                    { src: 'https://gd1.alicdn.com/bao/uploaded/i1/TB1PXJCJFXXXXciXFXXXXXXXXXX_!!0-item_pic.jpg' },
+                    { src: 'https://gd3.alicdn.com/bao/uploaded/i3/TB1x6hYLXXXXXazXVXXXXXXXXXX_!!0-item_pic.jpg' }
+                ]
             }
         },
         mounted() {
-            let self = this
-            // var modal = weex.requireModule('modal')
-            // modal.toast({
-            //     message: self.$ENTERTYPE,
-            //     duration: 0.8
-            // })
             for (let i = 0; i < 50; i++) {
                 this.test.push(i)
             }
+            stream.fetch({
+                method: 'GET',
+                url: 'http://m.banggo.com/dvert/getDvertInfo?siteMark=wap_index',
+                type: 'jsonp'
+            }, function (ret) {
+                console.log(ret, 22222)
+                if (!ret.ok) {
+                    console.log(ret)
+                    //me.getJsonpResult = "request failed";
+                } else {
+                    console.log('get:' + ret);
+                    //me.getJsonpResult = JSON.stringify(ret.data);
+                }
+            }, function (response) {
+                console.log('get jsonp in progress:' + response.length);
+                //me.getJsonpResult = "bytes received:" + response.length;
+            });
+
         },
         methods: {
             clear() {
@@ -63,14 +85,41 @@
             }
         },
         components: {
-            HelloWorld,
             Goto,
-            AppShell
+            SearchBar
         }
     }
 </script>
 
 <style scoped>
+    .flex {
+        display: flex;
+    }
+
+    .flex-1 {
+        flex: 1;
+    }
+
+    .flex-column {
+        flex-direction: column;
+    }
+
+    .image {
+        width: 750px;
+        height: 375px;
+    }
+
+    .slider {
+        width: 750px;
+        height: 375px;
+    }
+
+    .frame {
+        width: 750px;
+        height: 375px;
+        position: relative;
+    }
+
     .wrapper {
         justify-content: center;
         align-items: center;
