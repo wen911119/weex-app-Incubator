@@ -18,6 +18,8 @@
                     <text @click="goto">跳到第二页</text>
                     <text @click="testAlert">testAlert{{count}}</text>
                 </div>
+                <wxc-button text="Open Popup" @wxcButtonClicked="buttonClicked"></wxc-button>
+                <wxc-popup width="500" pos="left" :show="isShow" @wxcPopupOverlayClicked="overlayClicked"></wxc-popup>
             </scroller>
         </div>
     </div>
@@ -26,6 +28,7 @@
 
 <script>
     import { mapState, mapActions } from 'vuex'
+    import { WxcButton, WxcPopup } from 'weex-ui'
     import Goto from '@/components/Goto'
     import Router from '../../../plugins/router'
     import SearchBar from './components/search.vue'
@@ -40,12 +43,13 @@
                     { src: 'https://gd2.alicdn.com/bao/uploaded/i2/T14H1LFwBcXXXXXXXX_!!0-item_pic.jpg' },
                     { src: 'https://gd1.alicdn.com/bao/uploaded/i1/TB1PXJCJFXXXXciXFXXXXXXXXXX_!!0-item_pic.jpg' },
                     { src: 'https://gd3.alicdn.com/bao/uploaded/i3/TB1x6hYLXXXXXazXVXXXXXXXXXX_!!0-item_pic.jpg' }
-                ]
+                ],
+                isShow: false
             }
         },
-        computed:{
+        computed: {
             ...mapState({
-                count:state=>state.count
+                count: state => state.count
             })
         },
         mounted() {
@@ -88,11 +92,19 @@
             },
             testAlert() {
                 alert()
+            },
+            buttonClicked() {
+                this.isShow = true
+            },
+            overlayClicked() {
+                this.isShow = false
             }
         },
         components: {
             Goto,
-            SearchBar
+            SearchBar,
+            WxcButton,
+            WxcPopup
         }
     }
 </script>
