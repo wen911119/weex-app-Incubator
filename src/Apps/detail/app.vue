@@ -1,61 +1,56 @@
 <template>
-    <div class="wrapper">
-        <image :src="logo" class="logo" />
-        <text @click="back">返回</text>
+    <div class="flex flex-x-center">
+        <text>{{count}}</text>
+        <wxc-button text="加加加" @wxcButtonClicked="add(1)"></wxc-button>
     </div>
 </template>
 
 <script>
-    import RouterStackMixin from '@/mixins/routerStack.js'
-    import Router from '../../../plugins/router'
-    
-    import Goto from '@/components/Goto'
+    // weex-ui 文档地址 https://alibaba.github.io/weex-ui/#/cn/with-weex-toolkit
+    import { mapState, mapActions } from 'vuex'
+    import { WxcButton } from 'weex-ui'
+
     export default {
         name: 'App',
-        // mixins: [RouterStackMixin],
         data() {
             return {
-                logo: 'https://gw.alicdn.com/tfs/TB1yopEdgoQMeJjy1XaXXcSsFXa-640-302.png',
             }
         },
-        mounted() {
-            setInterval(function(){
-                console.log('setInterval')
-            },1500)
+        computed: {
+            ...mapState({
+                count: state => state.count
+            })
         },
         methods: {
-
-            back() {
-                Router.back()
-            }
+            ...mapActions({
+                add: "add"
+            })
         },
         components: {
-            Goto
+            WxcButton
         }
     }
 </script>
 
-<style scoped>
-    .wrapper {
+<style>
+    .flex {
+        display: flex;
+    }
+
+    .flex-1 {
+        flex: 1;
+    }
+
+    .flex-h-center {
         justify-content: center;
+    }
+
+    .flex-v-center {
         align-items: center;
     }
 
-    .logo {
-        width: 424px;
-        height: 200px;
-    }
-
-    .greeting {
-        text-align: center;
-        margin-top: 70px;
-        font-size: 50px;
-        color: #41B883;
-    }
-
-    .message {
-        margin: 30px;
-        font-size: 32px;
-        color: #727272;
+    .flex-x-center {
+        justify-content: center;
+        align-items: center;
     }
 </style>

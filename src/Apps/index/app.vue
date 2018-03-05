@@ -23,7 +23,6 @@
             </scroller>
         </div>
     </div>
-
 </template>
 
 <script>
