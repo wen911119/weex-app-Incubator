@@ -7,9 +7,9 @@
 
 <script>
     // weex-ui 文档地址 https://alibaba.github.io/weex-ui/#/cn/with-weex-toolkit
-    import { mapState, mapActions } from 'vuex'
     import { WxcButton } from 'weex-ui'
-
+    import { mapState, mapActions } from 'vuex'
+    
     export default {
         name: 'App',
         data() {
