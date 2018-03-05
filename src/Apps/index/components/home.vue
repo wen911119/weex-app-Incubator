@@ -16,7 +16,7 @@
                         <text>跳转到list页</text>
                     </goto>
                     <text @click="goto">跳到第二页</text>
-                    <text @click="testAlert">testAlert{{count}}</text>
+                    <text>testAlert{{count}}</text>
                 </div>
                 <wxc-button text="Open Popup" @wxcButtonClicked="buttonClicked"></wxc-button>
                 <wxc-popup width="500" pos="left" :show="isShow" @wxcPopupOverlayClicked="overlayClicked"></wxc-popup>
@@ -35,18 +35,17 @@
         data() {
             return {
                 test: [],
-                imageList: [
-                    { src: 'https://gd2.alicdn.com/bao/uploaded/i2/T14H1LFwBcXXXXXXXX_!!0-item_pic.jpg' },
-                    { src: 'https://gd1.alicdn.com/bao/uploaded/i1/TB1PXJCJFXXXXciXFXXXXXXXXXX_!!0-item_pic.jpg' },
-                    { src: 'https://gd3.alicdn.com/bao/uploaded/i3/TB1x6hYLXXXXXazXVXXXXXXXXXX_!!0-item_pic.jpg' }
-                ],
                 isShow: false
             }
         },
         computed: {
             ...mapState({
-                count: state => state.count
+                count: state => state.home.count,
+                imageList: state => state.home.imageList
             })
+        },
+        created(){
+            this.fetchImageList()
         },
         mounted() {
             for (let i = 0; i < 50; i++) {
@@ -54,11 +53,11 @@
             }
         },
         methods: {
+            ...mapActions({
+                fetchImageList:'home/fetchImageList'
+            }),
             goto() {
                 Router.push('list')
-            },
-            testAlert() {
-                alert()
             },
             buttonClicked() {
                 this.isShow = true

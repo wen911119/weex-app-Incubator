@@ -1,12 +1,12 @@
+import home from './home.js'
 export default {
     state: {
-        count: 100
+        
     },
     actions: {},
     getters: {},
     mutations: {},
     modules: {
-
-
+        home
     }
 }
