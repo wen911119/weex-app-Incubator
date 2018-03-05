@@ -1,4 +1,4 @@
-import axios from 'axios'
+
 // var base_url = process.env.API_URL
 const base_url = '/api'
 
@@ -8,19 +8,30 @@ function LOADING() {
 export default {
     get(url, params = {}, loading = true) {
         url = base_url + url
+        
         return new Promise((resolve, reject) => {
             loading && LOADING('show')
-            axios.get(url, { params }).then(res => {
+
+            const stream = weex.requireModule('stream')
+            stream.fetch({
+                method: 'GET',
+                url: url,
+                type: 'text'
+            }, function (ret) {
                 LOADING('hide')
-                if (res.status === 200) {
-                    resolve(res.data)
+                if (!ret.ok) {
+                    reject(ret.statusText)
                 } else {
-                    reject(res.statusText)
+                    // console.log(ret)
+                    resolve(ret.data)
                 }
-            }).catch(err => {
-                LOADING('hide')
-                reject(err)
+            }, function (response) {
+                // console.log('get in progress:' + response.length)
             })
+
+
+
+            
         })
     },
     post(url, params = {}, loading = true) {

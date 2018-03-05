@@ -16,9 +16,8 @@ const Home = {
                 num
             })
         },
-        async fetchImageList({ commit }) {
-            try {
-                let ret = await ajax.get('/banggo/dvert/getDvertInfo?siteMark=wap_index&ts=1503969642')
+        fetchImageList({ commit }) {
+            ajax.get('/banggo/dvert/getDvertInfo?siteMark=wap_index&ts=1503969642').then(function (ret) {
                 ret = ret.replace('var adList = ', '')
                 ret = JSON.parse(ret)
                 if (ret.wap_index_01 && ret.wap_index_01.data && ret.wap_index_01.data.content) {
@@ -27,14 +26,13 @@ const Home = {
                         content: ret.wap_index_01.data.content
                     })
                 }
-            } catch (e) {
+            }).catch(function (e) {
                 const modal = weex.requireModule('modal')
                 modal.toast({
-                    message: '网络错误',
+                    message: '网络错误'+e,
                     duration: 0.
                 })
-            }
-
+            })
         }
     },
     getters: {

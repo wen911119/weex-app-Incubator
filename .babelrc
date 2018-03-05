@@ -11,13 +11,6 @@
                 "libDir": "packages",
                 "style": false
             }
-        ],
-        [
-            "transform-runtime",
-            {
-                "polyfill": false,
-                "regenerator": true
-            }
         ]
     ]
 }

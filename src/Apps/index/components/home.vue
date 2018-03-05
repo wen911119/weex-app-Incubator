@@ -1,5 +1,5 @@
 <template>
-    <div class="home-page flex flex-column">
+    <div class="home-page flex flex-column flex-1">
         <search-bar></search-bar>
         <div class="flex-1">
             <scroller class="scroller flex-1">
@@ -44,7 +44,7 @@
                 imageList: state => state.home.imageList
             })
         },
-        created(){
+        created() {
             this.fetchImageList()
         },
         mounted() {
@@ -54,7 +54,7 @@
         },
         methods: {
             ...mapActions({
-                fetchImageList:'home/fetchImageList'
+                fetchImageList: 'home/fetchImageList'
             }),
             goto() {
                 Router.push('list')
@@ -75,8 +75,34 @@
     }
 </script>
 <style scoped>
-    .home-page {
+    /* .home-page {
         height: 100%;
+    } */
+
+    .flex {
+        display: flex;
+    }
+
+    .flex-1 {
+        flex: 1;
+    }
+
+    .flex-h-center {
+        justify-content: center;
+    }
+
+    .flex-v-center {
+        align-items: center;
+    }
+
+    .flex-x-center {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hold {
+        background-color: #f5f5f5;
+        width: 700px;
     }
 
     .image {
