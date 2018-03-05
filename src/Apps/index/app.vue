@@ -16,7 +16,7 @@
                         <text>跳转到list页</text>
                     </goto>
                     <text @click="goto">跳到第二页</text>
-                    <text @click="testAlert">testAlert</text>
+                    <text @click="testAlert">testAlert{{count}}</text>
                 </div>
             </scroller>
         </div>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+    import { mapState, mapActions } from 'vuex'
     import Goto from '@/components/Goto'
     import Router from '../../../plugins/router'
     import SearchBar from './components/search.vue'
@@ -41,6 +42,11 @@
                     { src: 'https://gd3.alicdn.com/bao/uploaded/i3/TB1x6hYLXXXXXazXVXXXXXXXXXX_!!0-item_pic.jpg' }
                 ]
             }
+        },
+        computed:{
+            ...mapState({
+                count:state=>state.count
+            })
         },
         mounted() {
             for (let i = 0; i < 50; i++) {
