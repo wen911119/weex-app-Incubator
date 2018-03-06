@@ -1,4 +1,5 @@
 import home from './home.js'
+import panel from './panel.js'
 export default {
     state: {
         
@@ -7,6 +8,7 @@ export default {
     getters: {},
     mutations: {},
     modules: {
-        home
+        home,
+        panel
     }
 }

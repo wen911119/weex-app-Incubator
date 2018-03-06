@@ -8,6 +8,7 @@
                         <image class="image" resize="cover" :src="img.src"></image>
                     </div>
                 </slider>
+                <panel template="wap_index_banner1" id="375"></panel>
                 <div class="flex-x-center">
                     <div class="hold">
                         <text class="list-item" v-for="item of test" @click="goto">{{item}}</text>
@@ -28,6 +29,7 @@
     import { mapState, mapActions } from 'vuex'
     import { WxcButton, WxcPopup } from 'weex-ui'
     import SearchBar from './search.vue'
+    import Panel from './panel.vue'
     import Goto from '@/components/Goto'
     import Router from '../../../../plugins/router'
 
@@ -41,7 +43,8 @@
         computed: {
             ...mapState({
                 count: state => state.home.count,
-                imageList: state => state.home.imageList
+                imageList: state => state.home.imageList,
+                entryList: state => state.home.entryList
             })
         },
         created() {
@@ -68,6 +71,7 @@
         },
         components: {
             SearchBar,
+            Panel,
             WxcButton,
             WxcPopup,
             Goto
@@ -75,10 +79,6 @@
     }
 </script>
 <style scoped>
-    /* .home-page {
-        height: 100%;
-    } */
-
     .flex {
         display: flex;
     }
@@ -98,6 +98,54 @@
     .flex-x-center {
         justify-content: center;
         align-items: center;
+    }
+
+    .flex-row {
+        flex-direction: row;
+    }
+
+    .flex-column {
+        flex-direction: column;
+    }
+
+    .iconfont {
+        font-family: iconfont;
+    }
+
+    .text {
+        color: #333;
+    }
+
+    .text24 {
+        font-size: 24px;
+    }
+
+    .text26 {
+        font-size: 26px;
+    }
+
+    .text28 {
+        font-size: 28px;
+    }
+
+    .text30 {
+        font-size: 30px;
+    }
+
+    .text32 {
+        font-size: 32px;
+    }
+
+    .text34 {
+        font-size: 34px;
+    }
+
+    .text36 {
+        font-size: 36px;
+    }
+
+    .text38 {
+        font-size: 38px;
     }
 
     .hold {

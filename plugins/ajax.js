@@ -8,7 +8,12 @@ function LOADING() {
 export default {
     get(url, params = {}, loading = true) {
         url = base_url + url
-        
+        let type = 'text'
+        if(url.indexOf('getDvertInfo')>-1){
+            type = 'text'
+        }else if(url.indexOf('GetPlateContent')>-1){
+            type = 'text'
+        }
         return new Promise((resolve, reject) => {
             loading && LOADING('show')
 
@@ -16,7 +21,7 @@ export default {
             stream.fetch({
                 method: 'GET',
                 url: url,
-                type: 'text'
+                type: type
             }, function (ret) {
                 LOADING('hide')
                 if (!ret.ok) {
@@ -26,7 +31,7 @@ export default {
                     resolve(ret.data)
                 }
             }, function (response) {
-                // console.log('get in progress:' + response.length)
+                console.log('get in progress:' + response.length)
             })
 
 
