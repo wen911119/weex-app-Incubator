@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="template mobile_index_banner14" v-if="panel.template==='mobile_index_banner14' && panel.content.length>0">
-                <text>mobile_index_banner14</text>
+                <image style="height:225px" :src="panel.content[0].src"></image>
             </div>
             <div class="template wap_index_man" v-if="panel.template==='wap_index_man' && panel.content.length>0">
                 <text>wap_index_man</text>
@@ -69,7 +69,7 @@
                 fetchPanelContent: 'panel/fetchPanelContent'
             }),
             goto(where) {
-                Router.push(where)
+                // Router.push(where)
             },
             detect() {
                 let self = this

@@ -2,14 +2,14 @@
     <div class="home-page flex flex-column flex-1">
         <search-bar></search-bar>
         <div class="flex-1">
-            <scroller class="scroller flex-1">
+            <scroller class="scroller flex-1" @loadmore="loadmore" @scroll="scroll" loadmoreoffset=100>
                 <slider class="slider" interval="3000" auto-play="true">
                     <div class="frame" v-for="img in imageList">
                         <image class="image" resize="cover" :src="img.src"></image>
                     </div>
                 </slider>
-                <panel template="wap_index_banner1" id="375"></panel>
-                <div class="flex-x-center">
+                <panel ref="panel" template="wap_index_banner1" id="375"></panel>
+                <!-- <div class="flex-x-center">
                     <div class="hold">
                         <text class="list-item" v-for="item of test" @click="goto">{{item}}</text>
                     </div>
@@ -20,7 +20,7 @@
                     <text>testAlert{{count}}</text>
                 </div>
                 <wxc-button text="Open Popup" @wxcButtonClicked="buttonClicked"></wxc-button>
-                <wxc-popup width="500" pos="left" :show="isShow" @wxcPopupOverlayClicked="overlayClicked"></wxc-popup>
+                <wxc-popup width="500" pos="left" :show="isShow" @wxcPopupOverlayClicked="overlayClicked"></wxc-popup> -->
             </scroller>
         </div>
     </div>
@@ -59,6 +59,20 @@
             ...mapActions({
                 fetchImageList: 'home/fetchImageList'
             }),
+            loadmore(){
+                const modal = weex.requireModule('modal')
+                modal.toast({
+                    message: 'bottom',
+                    duration: 0.8
+                })
+            },
+            scroll(e){
+                // const modal = weex.requireModule('modal')
+                // modal.toast({
+                //     message: e.contentOffset.y,
+                //     duration: 0.8
+                // })
+            },
             goto() {
                 Router.push('list')
             },

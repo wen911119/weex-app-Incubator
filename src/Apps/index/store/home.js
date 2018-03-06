@@ -31,7 +31,7 @@ const Home = {
                 const modal = weex.requireModule('modal')
                 modal.toast({
                     message: '网络错误' + e,
-                    duration: 0.
+                    duration: 0.8
                 })
             })
         },
@@ -49,7 +49,7 @@ const Home = {
                 const modal = weex.requireModule('modal')
                 modal.toast({
                     message: '网络错误' + e,
-                    duration: 0.
+                    duration: 0.8
                 })
             })
         }
