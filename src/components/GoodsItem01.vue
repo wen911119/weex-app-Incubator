@@ -1,7 +1,8 @@
 <template>
-    <div @click="select" class="goods-item-01">
-        <text>{{id}}</text>
-        <text>{{ goods? goods.product_name:'waiting...'}}</text>
+    <div @click="select" class="goods-item-01" v-if="goods">
+        <image :src="goods.imgUrl_320_320.replace('pic.banggo', 'pic.ruiyun2015').replace('w_286', 'w_300').replace('h_392', 'h_410').replace('m_lfit', 'm_fill')" class="goods-img"></image>
+        <text class="goods-name">{{ goods.product_name}}</text>
+        <text class="goods-price">¥{{ goods.sales_price}}</text>
     </div>
 </template>
 
@@ -86,9 +87,24 @@
     .goods-item-01 {
         height: 618px;
         width: 347px;
-        border-style: solid;
+        /* border-style: solid;
         border-color: #333;
-        border-width: 1px;
+        border-width: 1px; */
         margin-bottom: 10px;
+    }
+    .goods-img{
+        width: 347px;
+        height: 473.44px;
+        margin-bottom: 9px;
+    }
+    .goods-name{
+        height: 75px;
+        font-size: 28px;
+        color: #919191;
+    }
+    .goods-price{
+        color: #000;
+        font-size: 34px;
+        margin-top: 6px;
     }
 </style>
