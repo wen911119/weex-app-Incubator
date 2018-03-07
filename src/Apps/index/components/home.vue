@@ -2,13 +2,13 @@
     <div class="home-page flex flex-column flex-1">
         <search-bar></search-bar>
         <div class="flex-1">
-            <scroller class="scroller flex-1" @loadmore="loadmore" @scroll="scroll" loadmoreoffset=100>
+            <scroller class="scroller flex-1" @loadmore="loadmore" ref="scroller" loadmoreoffset=100>
                 <slider class="slider" interval="3000" auto-play="true">
                     <div class="frame" v-for="img in imageList">
                         <image class="image" resize="cover" :src="img.src"></image>
                     </div>
                 </slider>
-                <panel ref="panel" template="wap_index_banner1" id="375"></panel>
+                <panel ref="panel" template="wap_index_banner1" id="375" @update="panelUpdate"></panel>
                 <!-- <div class="flex-x-center">
                     <div class="hold">
                         <text class="list-item" v-for="item of test" @click="goto">{{item}}</text>
@@ -65,13 +65,10 @@
                     message: 'bottom',
                     duration: 0.8
                 })
+                this.$refs.panel.detect()
             },
-            scroll(e){
-                // const modal = weex.requireModule('modal')
-                // modal.toast({
-                //     message: e.contentOffset.y,
-                //     duration: 0.8
-                // })
+            panelUpdate(){
+                this.$refs.scroller.updateLayout()
             },
             goto() {
                 Router.push('list')

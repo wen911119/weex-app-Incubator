@@ -9,10 +9,12 @@ export default {
     get(url, params = {}, loading = true) {
         url = base_url + url
         let type = 'text'
-        if(url.indexOf('getDvertInfo')>-1){
+        if (url.indexOf('getDvertInfo') > -1) {
             type = 'text'
-        }else if(url.indexOf('GetPlateContent')>-1){
+        } else if (url.indexOf('GetPlateContent') > -1) {
             type = 'text'
+        } else if (url.indexOf('goods-list') > -1) {
+            type = 'json'
         }
         return new Promise((resolve, reject) => {
             loading && LOADING('show')
@@ -31,12 +33,8 @@ export default {
                     resolve(ret.data)
                 }
             }, function (response) {
-                console.log('get in progress:' + response.length)
+                // console.log('get in progress:' + response.length)
             })
-
-
-
-            
         })
     },
     post(url, params = {}, loading = true) {

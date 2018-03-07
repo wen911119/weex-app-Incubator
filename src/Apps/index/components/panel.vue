@@ -27,24 +27,83 @@
                 <image style="height:225px" :src="panel.content[0].src"></image>
             </div>
             <div class="template wap_index_man" v-if="panel.template==='wap_index_man' && panel.content.length>0">
-                <text>wap_index_man</text>
+                <image style="height:93.8px" :src="panel.content[0].src"></image>
+                <image style="height:211px" :src="panel.content[1].src"></image>
+                <div class="row flex flex-row">
+                    <image class="flex-1" style="height:211px" :src="panel.content[2].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[3].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[4].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[5].src"></image>
+                </div>
+                <div class="row flex flex-row">
+                    <image class="flex-1" style="height:211px" :src="panel.content[6].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[7].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[8].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[9].src"></image>
+                </div>
             </div>
             <div class="template wap_index_woman" v-if="panel.template==='wap_index_woman' && panel.content.length>0">
-                <text>wap_index_woman</text>
+                <image style="height:93.8px" :src="panel.content[0].src"></image>
+                <image style="height:211px" :src="panel.content[1].src"></image>
+                <div class="row flex flex-row">
+                    <image class="flex-1" style="height:211px" :src="panel.content[2].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[3].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[4].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[5].src"></image>
+                </div>
+                <div class="row flex flex-row">
+                    <image class="flex-1" style="height:211px" :src="panel.content[6].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[7].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[8].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[9].src"></image>
+                </div>
             </div>
             <div class="template wap_index_hotkids" v-if="panel.template==='wap_index_hotkids' && panel.content.length>0">
-                <text>wap_index_hotkids</text>
+                <image style="height:93.8px" :src="panel.content[0].src"></image>
+                <image style="height:211px" :src="panel.content[1].src"></image>
+                <div class="row flex flex-row">
+                    <image class="flex-1" style="height:211px" :src="panel.content[2].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[3].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[4].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[5].src"></image>
+                </div>
+                <div class="row flex flex-row">
+                    <image class="flex-1" style="height:211px" :src="panel.content[6].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[7].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[8].src"></image>
+                    <image class="flex-1" style="height:211px" :src="panel.content[9].src"></image>
+                </div>
             </div>
             <div class="template wap_product" v-if="panel.template==='wap_product' && panel.content.length>0">
-                <text>wap_product</text>
+                <div class="title flex flex-x-center" style="height:84px">
+                    <text class="text34" style="color:#6e6e6e;">———&nbsp;热销商品&nbsp;———</text>
+                </div>
+                <div class="hot-list flex flex-row" style="flex-wrap: wrap;justify-content: space-around;">
+                    <goods-item01 v-for="goodsId in panel.content" :id="goodsId" :key="goodsId"></goods-item01>
+                </div>
+            </div>
+            <div class="template wap_index_zhuxian" v-if="panel.template==='wap_index_zhuxian' && panel.content.length>0">
+                <image style="height:152px" :src="panel.content[0].src"></image>
+            </div>
+            <div class="template wap_thsgd" v-if="panel.template==='wap_thsgd' && panel.content.length>0">
+                <div class="row flex flex-row">
+                    <image class="flex-1" style="height:312.5px" :src="panel.content[0].src"></image>
+                    <image class="flex-1" style="height:312.5px" :src="panel.content[1].src"></image>
+                </div>
+                <div class="row flex flex-row">
+                    <image class="flex-1" style="height:312.5px" :src="panel.content[2].src"></image>
+                    <image class="flex-1" style="height:312.5px" :src="panel.content[3].src"></image>
+                </div>
             </div>
         </div>
-        <div class="panel-bottom" ref="panelBottom"></div>
+        <div class="panel-bottom" ref="panelBottom">
+        </div>
     </div>
 </template>
 <script>
     import Router from '../../../../plugins/router'
     import { mapState, mapActions } from 'vuex'
+    import GoodsItem01 from '@/components/GoodsItem01.vue'
     const dom = weex.requireModule('dom')
     export default {
         computed: {
@@ -59,6 +118,9 @@
             panels: {
                 handler: function (nv, ov) {
                     this.detect()
+                    setTimeout(() => {
+                        this.$emit('update')
+                    }, 0)
                 },
                 deep: true
             }
@@ -74,8 +136,8 @@
             detect() {
                 let self = this
                 dom.getComponentRect(this.$refs.panelBottom, option => {
-                    console.log('getComponentRect:', option)
-                    if (option.result && option.size.top < 1000) {
+                    // 这里的2000是pc的chrome模拟的1000
+                    if (option.result && option.size.top < 2000) {
                         let last = {}
                         for (let i = 0; i < self.panels.length; i++) {
                             if (self.panels[i].content.length === 0) {
@@ -91,6 +153,9 @@
                     }
                 })
             }
+        },
+        components: {
+            GoodsItem01
         }
     }
 </script>
