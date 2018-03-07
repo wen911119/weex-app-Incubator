@@ -68,7 +68,7 @@
                 this.$refs.panel.detect()
             },
             panelUpdate(){
-                this.$refs.scroller.updateLayout()
+                this.$refs.scroller.updateLayout && this.$refs.scroller.updateLayout()
             },
             goto() {
                 Router.push('list')

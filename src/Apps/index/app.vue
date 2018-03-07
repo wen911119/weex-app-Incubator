@@ -1,5 +1,5 @@
 <template>
-    <wxc-tab-bar :tab-titles="tabTitles" :tab-styles="tabStyles" title-type="icon" @wxcTabBarCurrentTabSelected="wxcTabBarCurrentTabSelected">
+    <wxc-tab-bar :tab-titles="tabTitles" :tab-styles="tabStyles" title-type="iconFont" @wxcTabBarCurrentTabSelected="wxcTabBarCurrentTabSelected">
         <!-- 第一个页面内容-->
         <div class="item-container flex flex-column" :style="contentStyle">
             <home></home>
@@ -30,8 +30,8 @@
         name: 'App',
         data() {
             return {
-                tabTitles: Config.tabTitles,
-                tabStyles: Config.tabStyles
+                tabTitles: Config.tabIconFontTitles,
+                tabStyles: Config.tabIconFontStyles
             }
         },
         beforeCreate() {
