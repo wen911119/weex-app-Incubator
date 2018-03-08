@@ -6,16 +6,19 @@
             </div>
             <div class="input-wrap flex-1 flex flex-row">
                 <div class="input-border flex-1 flex flex-row flex-v-center">
-                    <input type="text" class="input flex-1">
+                    <input type="text" class="input flex-1" @input="onInput">
                 </div>
                 <div class="search-icon flex flex-x-center">
                     <text class="iconfont search-icon-text">&#xe60f;</text>
                 </div>
             </div>
         </div>
-        <scroller class="flex-1" show-scrollbar=false>
-            <associate seed="s"></associate>
+        <scroller class="flex-1" show-scrollbar=false v-if="keyword">
+            <associate :seed="keyword"></associate>
         </scroller>
+        <div class="hot-box flex-1" v-else>
+            <text>hot-box</text>
+        </div>
     </div>
 </template>
 
@@ -27,6 +30,7 @@
         name: 'App',
         data() {
             return {
+                keyword:''
             }
         },
         beforeCreate() {
@@ -39,6 +43,10 @@
         methods: {
             close(){
                 Router.back()
+            },
+            onInput(event){
+                console.log(event.value)
+                this.keyword = event.value
             }
         },
         components: {
