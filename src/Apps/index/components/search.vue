@@ -16,7 +16,7 @@
         },
         methods:{
             goto(){
-                Router.push('list')
+                Router.push('search')
             }
         }
     }
