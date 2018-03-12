@@ -17,7 +17,7 @@
             <associate :seed="keyword"></associate>
         </scroller>
         <div class="hot-box flex-1" v-else>
-            <text @click="test">hot-box</text>
+            <text>hot-box</text>
         </div>
     </div>
 </template>
@@ -25,12 +25,12 @@
 <script>
     import Associate from './components/associate.vue'
     import Router from '../../../plugins/navigator'
-    
+
     export default {
         name: 'App',
         data() {
             return {
-                keyword:''
+                keyword: ''
             }
         },
         beforeCreate() {
@@ -40,22 +40,22 @@
                 'src': "url('http://s.banggo.com/pub1/bgwap/public/icon/bgwap-iconfont.ttf?20170904')"
             })
         },
-        mounted(){
-            this.$getNavigatorInfo().then(function(data){
-                console.log(data, 77766666)
+        mounted() {
+            this.$getNavigatorInfo().then(function (data) {
+                var modal = weex.requireModule('modal')
+                modal.toast({
+                    message: data.a,
+                    duration: 1.8
+                })
             })
         },
         methods: {
-            close(){
+            close() {
                 Router.back()
             },
-            onInput(event){
+            onInput(event) {
                 console.log(event.value)
                 this.keyword = event.value
-            },
-            test(){
-                alert(localStorage.getItem("test_a"))
-                
             }
         },
         components: {

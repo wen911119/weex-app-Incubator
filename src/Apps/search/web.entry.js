@@ -15,7 +15,11 @@ const myMixin = {
                 const storage = weex.requireModule('storage')
                 storage.getItem('_navigator_data_', function (e) {
                     if (e.result === 'success') {
-                        resolve(e.data)
+                        try {
+                            resolve(JSON.parse(e.data))
+                        }catch(err){
+                            reject(err)
+                        }
                     } else {
                         reject()
                     }
