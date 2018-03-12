@@ -4,6 +4,9 @@
             <div class="template wap_index_banner1 flex flex-row" v-if="panel.template==='wap_index_banner1' && panel.content.length>0">
                 <image class="entry-item flex-1" v-for="item in panel.content" :src="item.src" @click="goto(item.target)"></image>
             </div>
+            <div class="template wap_index_banner2 flex flex-row" v-if="panel.template==='wap_index_banner2' && panel.content.length>0">
+                <image class="entry-item flex-1" v-for="item in panel.content" :src="item.src" @click="goto(item.target)"></image>
+            </div>
             <div class="template wap_dailymodel22" v-if="panel.template==='wap_dailymodel22' && panel.content.length>0">
                 <image style="height:117px" :src="panel.content[0].src"></image>
                 <div class="row flex flex-row">
@@ -21,6 +24,23 @@
                 <div class="row flex flex-row">
                     <image class="flex-1" style="height:312.5px" :src="panel.content[7].src"></image>
                     <image class="flex-1" style="height:312.5px" :src="panel.content[8].src"></image>
+                </div>
+            </div>
+            <div class="template liyantest10" v-if="panel.template==='liyantest10' && panel.content.length>0">
+                <image style="height:93.8px" :src="panel.content[0].src"></image>
+                <div class="row flex flex-row">
+                    <image class="flex-1" style="height:312.5px" :src="panel.content[1].src"></image>
+                    <image class="flex-1" style="height:312.5px" :src="panel.content[2].src"></image>
+                </div>
+                <div class="row flex flex-row">
+                    <image class="flex-1" style="height:312.5px" :src="panel.content[3].src"></image>
+                    <image class="flex-1" style="height:312.5px" :src="panel.content[4].src"></image>
+                </div>
+            </div>
+            <div class="template mobile_index_zhekou3" v-if="panel.template==='mobile_index_zhekou3' && panel.content.length>0">
+                <div class="row flex flex-row">
+                    <image class="flex-1" style="height:225px" :src="panel.content[0].src"></image>
+                    <image class="flex-1" style="height:225px" :src="panel.content[1].src"></image>
                 </div>
             </div>
             <div class="template mobile_index_banner14" v-if="panel.template==='mobile_index_banner14' && panel.content.length>0">
