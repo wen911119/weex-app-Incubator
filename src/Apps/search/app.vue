@@ -19,7 +19,7 @@
         <div v-else>
             <text class="hot-box-title text28">热门搜索:</text>
             <div class="hot-box flex flex-row">
-                <text v-for="item in hotwords" class="hot-word text28">{{item}}</text>
+                <text v-for="item in hotwords" class="hot-word text28" @click="gotoList(item)">{{item}}</text>
             </div>
         </div>
     </div>
@@ -50,11 +50,6 @@
             this.$getNavigatorInfo().then(function (data) {
                 self.placeholder = data.searchInfo.placeholder
                 self.hotwords = data.searchInfo.hotwords
-                var modal = weex.requireModule('modal')
-                modal.toast({
-                    message: data.searchInfo.placeholder,
-                    duration: 1.8
-                })
             })
         },
         methods: {
@@ -64,6 +59,9 @@
             onInput(event) {
                 console.log(event.value)
                 this.keyword = event.value
+            },
+            gotoList(keyword) {
+                navigator.push('list', { keyword })
             }
         },
         components: {
@@ -193,13 +191,14 @@
         font-size: 51px;
     }
 
-    .hot-box-title{
+    .hot-box-title {
         height: 102px;
         line-height: 102px;
         padding-left: 35px;
         padding-right: 35px;
         color: #919191;
     }
+
     .hot-box {
         flex-wrap: wrap;
         padding-left: 35px;
