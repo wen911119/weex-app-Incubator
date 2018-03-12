@@ -7,7 +7,11 @@ const Home = {
             count: 100,
             imageList: [
             ],
-            entryList: []
+            entryList: [],
+            search:{
+                placeholder:'',
+                hotwords:[]
+            }
         }
     },
     actions: {
@@ -25,6 +29,10 @@ const Home = {
                     commit({
                         type: 'fillImageList',
                         content: ret.wap_index_01.data.content
+                    })
+                    commit({
+                        type: 'fillSearch',
+                        content: ret.WAP_search.data.content[0]
                     })
                 }
             }).catch(function (e) {
@@ -66,6 +74,10 @@ const Home = {
         },
         fillEntryList(state, payload) {
             state.entryList = payload.content.map(item => { return { src: item.image_url.replace('img.banggo', 'pic.ruiyun2015'), target: item.url_website } })
+        },
+        fillSearch(state, payload){
+            state.search.placeholder = payload.content.ad_content_title
+            state.search.hotwords = payload.content.ad_content_info.match(/<span>.+?<\/span>/g).map(item=>item.replace(/<span>(.+)<\/span>/,"$1"))
         }
     },
     modules: {

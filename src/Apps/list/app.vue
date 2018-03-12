@@ -15,7 +15,7 @@
 </template>
 
 <script>
-    import Router from '../../../plugins/navigator'
+    import navigator from '../../../plugins/navigator'
     import Goto from '@/components/Goto'
     
     export default {
@@ -39,7 +39,7 @@
                 })
             },
             back() {
-                Router.back()
+                navigator.back()
             }
         },
         components:{

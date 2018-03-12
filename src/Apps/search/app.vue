@@ -6,7 +6,7 @@
             </div>
             <div class="input-wrap flex-1 flex flex-row">
                 <div class="input-border flex-1 flex flex-row flex-v-center">
-                    <input type="text" class="input flex-1" @input="onInput">
+                    <input type="text" class="input flex-1" @input="onInput" :placeholder="placeholder">
                 </div>
                 <div class="search-icon flex flex-x-center">
                     <text class="iconfont search-icon-text">&#xe60f;</text>
@@ -16,21 +16,26 @@
         <scroller class="flex-1" show-scrollbar=false v-if="keyword">
             <associate :seed="keyword"></associate>
         </scroller>
-        <div class="hot-box flex-1" v-else>
-            <text>hot-box</text>
+        <div v-else>
+            <text class="hot-box-title text28">热门搜索:</text>
+            <div class="hot-box flex flex-row">
+                <text v-for="item in hotwords" class="hot-word text28">{{item}}</text>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     import Associate from './components/associate.vue'
-    import Router from '../../../plugins/navigator'
+    import navigator from '../../../plugins/navigator'
 
     export default {
         name: 'App',
         data() {
             return {
-                keyword: ''
+                keyword: '',
+                placeholder: '',
+                hotwords: []
             }
         },
         beforeCreate() {
@@ -41,17 +46,20 @@
             })
         },
         mounted() {
+            let self = this
             this.$getNavigatorInfo().then(function (data) {
+                self.placeholder = data.searchInfo.placeholder
+                self.hotwords = data.searchInfo.hotwords
                 var modal = weex.requireModule('modal')
                 modal.toast({
-                    message: data.a,
+                    message: data.searchInfo.placeholder,
                     duration: 1.8
                 })
             })
         },
         methods: {
             close() {
-                Router.back()
+                navigator.back()
             },
             onInput(event) {
                 console.log(event.value)
@@ -169,6 +177,7 @@
         padding: 0;
         -webkit-appearance: none;
         height: 70px;
+        outline: none;
     }
 
     .search-icon {
@@ -182,5 +191,31 @@
     .search-icon-text {
         color: #fff;
         font-size: 51px;
+    }
+
+    .hot-box-title{
+        height: 102px;
+        line-height: 102px;
+        padding-left: 35px;
+        padding-right: 35px;
+        color: #919191;
+    }
+    .hot-box {
+        flex-wrap: wrap;
+        padding-left: 35px;
+        padding-right: 35px;
+        justify-content: space-between;
+    }
+
+    .hot-word {
+        color: #333;
+        border-width: 1px;
+        border-radius: 8px;
+        border-color: #c7c7c7;
+        width: 175px;
+        height: 60px;
+        line-height: 58px;
+        text-align: center;
+        margin-bottom: 37.5px;
     }
 </style>

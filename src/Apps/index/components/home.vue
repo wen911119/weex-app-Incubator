@@ -1,8 +1,8 @@
 <template>
     <div class="home-page flex flex-column flex-1">
-        <search-bar></search-bar>
+        <search-bar :search="search"></search-bar>
         <div class="flex-1">
-            <scroller class="scroller flex-1" @loadmore="loadmore" ref="scroller" loadmoreoffset=100>
+            <scroller class="scroller flex-1" @loadmore="loadmore" show-scrollbar=false ref="scroller" loadmoreoffset=100>
                 <slider class="slider" interval="3000" auto-play="true">
                     <div class="frame" v-for="img in imageList">
                         <image class="image" resize="cover" :src="img.src"></image>
@@ -31,7 +31,7 @@
     import SearchBar from './search.vue'
     import Panel from './panel.vue'
     import Goto from '@/components/Goto'
-    import Router from '../../../../plugins/navigator'
+    import navigator from '../../../../plugins/navigator'
 
     export default {
         data() {
@@ -44,7 +44,8 @@
             ...mapState({
                 count: state => state.home.count,
                 imageList: state => state.home.imageList,
-                entryList: state => state.home.entryList
+                entryList: state => state.home.entryList,
+                search: state => state.home.search
             })
         },
         created() {
@@ -71,7 +72,7 @@
                 this.$refs.scroller.updateLayout && this.$refs.scroller.updateLayout()
             },
             goto() {
-                Router.push('list')
+                navigator.push('list')
             },
             buttonClicked() {
                 this.isShow = true

@@ -121,7 +121,7 @@
     </div>
 </template>
 <script>
-    import Router from '../../../../plugins/navigator'
+    import navigator from '../../../../plugins/navigator'
     import { mapState, mapActions } from 'vuex'
     import GoodsItem01 from '@/components/GoodsItem01.vue'
     const dom = weex.requireModule('dom')
@@ -151,7 +151,7 @@
                 fetchPanelContent: 'panel/fetchPanelContent'
             }),
             goto(where) {
-                // Router.push(where)
+                // navigator.push(where)
             },
             detect() {
                 let self = this

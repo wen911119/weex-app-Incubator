@@ -2,21 +2,24 @@
     <div class="search-bar flex flex-x-center">
         <div class="search-bar-inner flex flex-row flex-v-center" @click="goto">
             <text class="search-bar-text iconfont text30">&#xe60f;</text>
-            <text class="search-bar-text text26">冬季新品</text>
+            <text class="search-bar-text text26">{{search.placeholder}}</text>
         </div>
     </div>
 </template>
 <script>
-    import Router from '../../../../plugins/navigator'
+    import navigator from '../../../../plugins/navigator'
     export default {
-        data() {
-            return {
-                placeHold: "冬季新品"
+        props: {
+            search: {
+                type: Object,
+                default: function(){
+                    return {}
+                }
             }
         },
         methods: {
             goto() {
-                Router.push('search', { a: 'wwwwww' })
+                navigator.push('search', { searchInfo: this.search })
             }
         }
     }
