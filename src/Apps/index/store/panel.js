@@ -63,7 +63,6 @@ const Panel = {
         fillPanelContent(state, payload) {
             if(payload.template === 'wap_product'){
                 // 热销商品特殊处理
-                console.log(payload.content, 22222)
                 state.panels[payload.index].content = payload.content[0].content.split(',')
             }else {
                 state.panels[payload.index].content = payload.content.map(item => { return { src: item.image_url.replace('img.banggo', 'pic.ruiyun2015'), target: item.url_website } })

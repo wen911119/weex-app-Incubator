@@ -31,7 +31,7 @@
     import SearchBar from './search.vue'
     import Panel from './panel.vue'
     import Goto from '@/components/Goto'
-    import Router from '../../../../plugins/router'
+    import Router from '../../../../plugins/navigator'
 
     export default {
         data() {

@@ -7,16 +7,16 @@
     </div>
 </template>
 <script>
-    import Router from '../../../../plugins/router'    
+    import Router from '../../../../plugins/navigator'
     export default {
         data() {
             return {
                 placeHold: "冬季新品"
             }
         },
-        methods:{
-            goto(){
-                Router.push('search')
+        methods: {
+            goto() {
+                Router.push('search', { a: 'wwwwww' })
             }
         }
     }

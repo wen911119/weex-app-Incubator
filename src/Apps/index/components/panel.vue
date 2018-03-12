@@ -101,7 +101,7 @@
     </div>
 </template>
 <script>
-    import Router from '../../../../plugins/router'
+    import Router from '../../../../plugins/navigator'
     import { mapState, mapActions } from 'vuex'
     import GoodsItem01 from '@/components/GoodsItem01.vue'
     const dom = weex.requireModule('dom')

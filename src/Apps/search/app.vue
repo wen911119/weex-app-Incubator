@@ -17,14 +17,14 @@
             <associate :seed="keyword"></associate>
         </scroller>
         <div class="hot-box flex-1" v-else>
-            <text>hot-box</text>
+            <text @click="test">hot-box</text>
         </div>
     </div>
 </template>
 
 <script>
     import Associate from './components/associate.vue'
-    import Router from '../../../plugins/router'
+    import Router from '../../../plugins/navigator'
     
     export default {
         name: 'App',
@@ -40,6 +40,11 @@
                 'src': "url('http://s.banggo.com/pub1/bgwap/public/icon/bgwap-iconfont.ttf?20170904')"
             })
         },
+        mounted(){
+            this.$getNavigatorInfo().then(function(data){
+                console.log(data, 77766666)
+            })
+        },
         methods: {
             close(){
                 Router.back()
@@ -47,6 +52,10 @@
             onInput(event){
                 console.log(event.value)
                 this.keyword = event.value
+            },
+            test(){
+                alert(localStorage.getItem("test_a"))
+                
             }
         },
         components: {

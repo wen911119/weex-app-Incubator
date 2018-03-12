@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import router from '../../plugins/router.js'
+    import router from '../../plugins/navigator.js'
     import { mapState, mapActions } from 'vuex'
     import ajax from '../../plugins/ajax.js'
     export default {

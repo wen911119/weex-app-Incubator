@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import router from '../../plugins/router.js'
+    import router from '../../plugins/navigator.js'
     export default {
         props: {
             target: {

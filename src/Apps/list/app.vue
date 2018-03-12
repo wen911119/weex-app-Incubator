@@ -15,12 +15,10 @@
 </template>
 
 <script>
-    import RouterStackMixin from '@/mixins/routerStack.js'
-    import Router from '../../../plugins/router'
+    import Router from '../../../plugins/navigator'
     import Goto from '@/components/Goto'
     
     export default {
-        // mixins: [RouterStackMixin],
         data() {
             return {
                 imageList: [
