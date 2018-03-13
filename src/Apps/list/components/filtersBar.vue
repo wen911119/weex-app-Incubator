@@ -1,25 +1,26 @@
 <template>
     <div class="wrap">
         <div class="filters-bar flex flex-row flex-v-center">
-            <div class="flex flex-row flex-v-center" @click="sortByX">
+            <div class="fliter-item flex flex-row flex-v-center" @click="sortByX">
                 <text class="item text32" :class="[activeIndex<=3?'active':'']">{{activeIndex===1?'综合':activeIndex===2?'新品':'销量'}}</text>
                 <text class="iconfont triangle arrow" :class="[isSortByXShow?'rotate180':'rotate0']">&#xe60e;</text>
             </div>
-            <div class="flex flex-row flex-v-center">
-                <text class="item text32">价格</text>
+            <div class="fliter-item flex flex-row flex-v-center" @click="sortByPrice">
+                <text class="item text32" :class="[activeIndex>3&&activeIndex<6?'active':'']">价格</text>
                 <div>
-                    <text class="iconfont arrow" :class="[activeIndex===4?'active':'']">&#xe615;</text>
-                    <text class="iconfont arrow" :class="[activeIndex===5?'active':'']">&#xe60e;</text>
+                    <text class="iconfont arrow arrow-samll" :class="[activeIndex===4?'active':'']">&#xe615;</text>
+                    <text class="iconfont arrow arrow-samll" :class="[activeIndex===5?'active':'']">&#xe60e;</text>
                 </div>
             </div>
-            <div>
-                <text class="item text32">有货</text>
+            <div class="fliter-item flex flex-row flex-v-center" @click="onlyInStock=!onlyInStock">
+                <text class="item text32" :class="[onlyInStock?'active':'']">有货</text>
             </div>
-            <div>
+            <div class="fliter-item flex flex-row flex-v-center">
                 <text @click="doFilter" class="item text32">筛选</text>
             </div>
-            <div>
-                <text class="item text32 iconfont">&#xe626;</text>
+            <div @click="toggle" class="fliter-item switch flex flex-row flex-v-center">
+                <text class="item iconfont text34" v-if="listType==='middle'">&#xe626;</text>
+                <text class="item text32 iconfont" v-if="listType==='small'">&#xe627;</text>
             </div>
         </div>
         <div class="popdown-mask" :class="[pullDown?'mask-show':'mask-hide']" v-if="isSortByXShow" @touchmove="touchmove" @click="sortByX">
@@ -40,7 +41,26 @@
             return {
                 isSortByXShow: false,
                 activeIndex: 1,
-                pullDown: false
+                pullDown: false,
+                onlyInStock: false,
+                listType: 'middle'
+            }
+        },
+        watch: {
+            activeIndex(nv, ov) {
+                this.$emit('fliterChange', {
+                    index: this.activeIndex,
+                    onlyInStock: this.onlyInStock
+                })
+            },
+            onlyInStock(nv, ov) {
+                this.$emit('fliterChange', {
+                    index: this.activeIndex,
+                    onlyInStock: this.onlyInStock
+                })
+            },
+            listType(nv, ov) {
+                this.$emit('switch', this.listType)
             }
         },
         methods: {
@@ -55,6 +75,21 @@
                 } else {
                     this.isSortByXShow = !this.isSortByXShow
                     setTimeout(() => this.pullDown = this.isSortByXShow, 50)
+                }
+            },
+            sortByPrice() {
+                this.pullDown = this.isSortByXShow = false
+                if (this.activeIndex === 4) {
+                    this.activeIndex = 5
+                } else {
+                    this.activeIndex = 4
+                }
+            },
+            toggle() {
+                if (this.listType === 'middle') {
+                    this.listType = 'small'
+                } else {
+                    this.listType = 'middle'
                 }
             },
             touchmove(e) {
@@ -146,6 +181,13 @@
     .item {
         color: #919191;
     }
+    .fliter-item{
+        height: 103px;
+    }
+    .switch{
+        width: 46px;
+        justify-content: flex-end;
+    }
 
     .pulldown-item {
         padding-left: 35px;
@@ -162,6 +204,10 @@
         font-size: 20px;
         color: #919191;
         margin-left: 10px;
+    }
+
+    .arrow-samll {
+        font-size: 16px;
     }
 
     .rotate180 {

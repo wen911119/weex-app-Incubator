@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-column">
-        <filters-bar @filter="openRightPopup"></filters-bar>
+        <filters-bar @filter="openRightPopup" @fliterChange="fliterChange" @switch="toggleListType"></filters-bar>
         <list class="flex-1">
             <cell v-for="item in test">
                 <text style="height:150px;">{{item}}</text>
@@ -44,6 +44,12 @@
             },
             popupOverlayRightClick() {
                 this.isRightShow = false
+            },
+            fliterChange(condition){
+                console.log(condition)
+            },
+            toggleListType(listType){
+                console.log(listType)
             }
         },
         components: {
