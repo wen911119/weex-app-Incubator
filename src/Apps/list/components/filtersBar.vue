@@ -1,46 +1,66 @@
 <template>
     <div class="wrap">
         <div class="filters-bar flex flex-row flex-v-center">
-            <div>
-                <text class="item text32">综合</text>
+            <div class="flex flex-row flex-v-center" @click="sortByX">
+                <text class="item text32" :class="[activeIndex<=3?'active':'']">{{activeIndex===1?'综合':activeIndex===2?'新品':'销量'}}</text>
+                <text class="iconfont triangle arrow" :class="[isSortByXShow?'rotate180':'rotate0']">&#xe60e;</text>
             </div>
-            <div>
+            <div class="flex flex-row flex-v-center">
                 <text class="item text32">价格</text>
+                <div>
+                    <text class="iconfont arrow" :class="[activeIndex===4?'active':'']">&#xe615;</text>
+                    <text class="iconfont arrow" :class="[activeIndex===5?'active':'']">&#xe60e;</text>
+                </div>
             </div>
             <div>
                 <text class="item text32">有货</text>
             </div>
             <div>
-                <text @click="openRightPopup" class="item text32">筛选</text>
+                <text @click="doFilter" class="item text32">筛选</text>
             </div>
             <div>
-                <text class="item text32">icon</text>
+                <text class="item text32 iconfont">&#xe626;</text>
             </div>
         </div>
-        <wxc-popup :show="isRightShow" @wxcPopupOverlayClicked="popupOverlayRightClick" pos="right" width="645">
-            <text>wwwwwjjjjjj</text>
-        </wxc-popup>
+        <div class="popdown-mask" :class="[pullDown?'mask-show':'mask-hide']" v-if="isSortByXShow" @touchmove="touchmove" @click="sortByX">
+            <div class="popdown" :class="[pullDown?'pullDown':'hide']">
+                <div class="pulldown-inner flex flex-column">
+                    <text class="flex-1 item text28 pulldown-item" :class="[activeIndex===1?'active':'']" @click="sortByX(1)">综合排序</text>
+                    <text class="flex-1 item text28 pulldown-item" :class="[activeIndex===2?'active':'']" @click="sortByX(2)">新品优先</text>
+                    <text class="flex-1 item text28 pulldown-item" :class="[activeIndex===3?'active':'']" @click="sortByX(3)">销量从高到低</text>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-    import { WxcPopup } from 'weex-ui'
     export default {
         data() {
             return {
-                isRightShow: false
+                isSortByXShow: false,
+                activeIndex: 1,
+                pullDown: false
             }
         },
         methods: {
-            openRightPopup() {
-                this.isRightShow = true
+            doFilter() {
+                this.pullDown = this.isSortByXShow = false
+                this.$emit('filter')
             },
-            popupOverlayRightClick() {
-                this.isRightShow = false
+            sortByX(index) {
+                if (typeof index === 'number') {
+                    this.pullDown = this.isSortByXShow = false
+                    this.activeIndex = index
+                } else {
+                    this.isSortByXShow = !this.isSortByXShow
+                    setTimeout(() => this.pullDown = this.isSortByXShow, 50)
+                }
+            },
+            touchmove(e) {
+                e && e.preventDefault && e.preventDefault()
+                return false
             }
-        },
-        components:{
-            WxcPopup
         }
     }
 </script>
@@ -124,7 +144,75 @@
     }
 
     .item {
-        text-align: center;
         color: #919191;
+    }
+
+    .pulldown-item {
+        padding-left: 35px;
+        padding-right: 35px;
+        line-height: 102px;
+    }
+
+    .triangle {
+        transition-property: transform;
+        transition-duration: .2s;
+    }
+
+    .arrow {
+        font-size: 20px;
+        color: #919191;
+        margin-left: 10px;
+    }
+
+    .rotate180 {
+        transform: rotate(180deg);
+    }
+
+    .rotate0 {
+        transform: rotate(0deg);
+    }
+
+    .active {
+        color: #f8584f;
+    }
+
+    .popdown-mask {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 103px;
+        bottom: 0;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, 0);
+        transition-property: backgroundColor;
+        transition-duration: 200ms;
+    }
+
+    .mask-show {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .mask-hide {
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    .popdown {
+        height: 0px;
+        background-color: #fff;
+        transition-property: height;
+        transition-duration: 200ms;
+        overflow: hidden;
+    }
+
+    .pullDown {
+        height: 306px;
+    }
+
+    .hide {
+        height: 0px;
+    }
+
+    .pulldown-inner {
+        height: 306px;
     }
 </style>
