@@ -7,18 +7,15 @@ function LOADING() {
 }
 export default {
     get(url, params = {}, loading = true) {
-        url = base_url + url
+        url = encodeURI(base_url + url)
         let type = 'text'
-        if (url.indexOf('getDvertInfo') > -1) {
-            type = 'text'
-        } else if (url.indexOf('GetPlateContent') > -1) {
-            type = 'text'
-        } else if (url.indexOf('goods-list') > -1) {
+        if (url.indexOf('goods-list') > -1) {
+            type = 'json'
+        } else if (url.indexOf('get-search-goods') > -1) {
             type = 'json'
         }
         return new Promise((resolve, reject) => {
             loading && LOADING('show')
-
             const stream = weex.requireModule('stream')
             stream.fetch({
                 method: 'GET',
@@ -27,7 +24,7 @@ export default {
             }, function (ret) {
                 LOADING('hide')
                 if (!ret.ok) {
-                    reject(ret.statusText)
+                    reject(ret)
                 } else {
                     // console.log(ret)
                     resolve(ret.data)
@@ -35,6 +32,8 @@ export default {
             }, function (response) {
                 // console.log('get in progress:' + response.length)
             })
+
+
         })
     },
     post(url, params = {}, loading = true) {

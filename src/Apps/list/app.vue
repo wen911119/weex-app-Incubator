@@ -1,9 +1,10 @@
 <template>
     <div class="flex flex-column">
-        <filters-bar @filter="openRightPopup" @fliterChange="fliterChange" @switch="toggleListType"></filters-bar>
-        <list class="flex-1">
-            <cell v-for="item in test">
-                <text style="height:150px;">{{item}}</text>
+        <filters-bar @filter="openRightPopup" @filterChange="filterChange" @switch="toggleListType"></filters-bar>
+        <list class="flex-1" @loadmore="loadmore" loadmoreoffset=10>
+            <cell ref="listTop"></cell>
+            <cell v-for="item in goods">
+                <text style="height:150px;">{{item.productName}}</text>
             </cell>
         </list>
         <wxc-popup :show="isRightShow" :animation="{duration:200}" :overlay-cfg="{opacity:0.2,duration:200}" @wxcPopupOverlayClicked="popupOverlayRightClick"
@@ -17,12 +18,27 @@
     import navigator from '../../../plugins/navigator'
     import FiltersBar from './components/filtersBar.vue'
     import { WxcPopup } from 'weex-ui'
+    import { mapState, mapActions } from 'vuex'
+
 
     export default {
         data() {
             return {
-                test: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                isRightShow: false
+                isRightShow: false,
+                keyword: '',
+                conditionsBackup: {}
+            }
+        },
+        computed: {
+            ...mapState({
+                goods: state => state.list.goods,
+                currentPage: state => state.list.meta.currentPage,
+                totalPage: state => state.list.meta.totalPage
+            })
+        },
+        watch: {
+            currentPage(nv) {
+                nv === 1 && weex.requireModule('dom').scrollToElement(this.$refs.listTop, { animated: false })
             }
         },
         beforeCreate() {
@@ -35,7 +51,11 @@
         mounted() {
             let self = this
             this.$getNavigatorInfo().then(function (data) {
-                console.log(data, 22222)
+                self.conditionsBackup.keyword = data.keyword
+                self.conditionsBackup.currentPage = self.currentPage + 1
+                self.fetchGoodsData(self.conditionsBackup)
+
+
             })
         },
         methods: {
@@ -45,12 +65,22 @@
             popupOverlayRightClick() {
                 this.isRightShow = false
             },
-            fliterChange(condition){
-                console.log(condition)
+            filterChange(filters) {
+                this.conditionsBackup = Object.assign(this.conditionsBackup, filters, { currentPage: 1 })
+                console.log(this.conditionsBackup)
+                this.fetchGoodsData(this.conditionsBackup)
             },
-            toggleListType(listType){
+            toggleListType(listType) {
                 console.log(listType)
-            }
+            },
+            loadmore() {
+                console.log('loadmore')
+                this.conditionsBackup = Object.assign(this.conditionsBackup, { currentPage: this.currentPage + 1 })
+                this.fetchGoodsData(this.conditionsBackup)
+            },
+            ...mapActions({
+                fetchGoodsData: 'list/fetchGoodsData'
+            })
         },
         components: {
             FiltersBar,

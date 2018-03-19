@@ -48,13 +48,13 @@
         },
         watch: {
             activeIndex(nv, ov) {
-                this.$emit('fliterChange', {
+                this.$emit('filterChange', {
                     index: this.activeIndex,
                     onlyInStock: this.onlyInStock
                 })
             },
             onlyInStock(nv, ov) {
-                this.$emit('fliterChange', {
+                this.$emit('filterChange', {
                     index: this.activeIndex,
                     onlyInStock: this.onlyInStock
                 })

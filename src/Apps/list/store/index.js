@@ -1,12 +1,12 @@
+import list from './list.js'
+
 export default {
     state: {
-        count: 100
     },
     actions: {},
     getters: {},
     mutations: {},
     modules: {
-
-
+        list
     }
 }
