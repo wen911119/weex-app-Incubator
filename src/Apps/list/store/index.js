@@ -1,4 +1,5 @@
 import list from './list.js'
+import filter from './filter.js'
 
 export default {
     state: {
@@ -7,6 +8,7 @@ export default {
     getters: {},
     mutations: {},
     modules: {
-        list
+        list,
+        filter
     }
 }

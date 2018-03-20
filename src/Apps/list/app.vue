@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-column">
         <filters-bar @filter="openRightPopup" @filterChange="filterChange" @switch="toggleListType"></filters-bar>
-        <list class="flex-1" @loadmore="loadmore" loadmoreoffset=10>
+        <list class="flex-1" @loadmore="loadmore" loadmoreoffset=10 :show-scrollbar="false">
             <cell ref="listTop"></cell>
             <cell v-for="item in goods">
                 <text style="height:150px;">{{item.productName}}</text>
@@ -9,7 +9,7 @@
         </list>
         <wxc-popup :show="isRightShow" :animation="{duration:200}" :overlay-cfg="{opacity:0.2,duration:200}" @wxcPopupOverlayClicked="popupOverlayRightClick"
             pos="right" width="645">
-            <text>wwwwwjjjjjj</text>
+            <filter-panel :keyword="conditionsBackup.keyword" v-if="conditionsBackup.keyword"></filter-panel>
         </wxc-popup>
     </div>
 </template>
@@ -17,14 +17,15 @@
 <script>
     import navigator from '../../../plugins/navigator'
     import FiltersBar from './components/filtersBar.vue'
-    import { WxcPopup } from 'weex-ui'
+    import FilterPanel from './components/filter/app.vue'
+    import { WxcPopup, WxcButton, WxcStepper } from 'weex-ui'
     import { mapState, mapActions } from 'vuex'
 
 
     export default {
         data() {
             return {
-                isRightShow: false,
+                isRightShow: true,
                 keyword: '',
                 conditionsBackup: {}
             }
@@ -84,7 +85,10 @@
         },
         components: {
             FiltersBar,
-            WxcPopup
+            FilterPanel,
+            WxcPopup,
+            WxcButton,
+            WxcStepper
         }
     }
 </script>
