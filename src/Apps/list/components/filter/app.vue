@@ -10,7 +10,7 @@
             </div>
         </div>
         <scroller class="flex-1" :show-scrollbar="false">
-            <fragment :info="info"></fragment>
+            <fragment @select="onSelect" :info="item" v-for="item in others" :selectInfo="select[item.name] || ''" :key="item.code"></fragment>
         </scroller>
 
         <div class="bottom-btns flex flex-row">
@@ -37,49 +37,29 @@
         },
         data() {
             return {
-                info: {
-                    value: [{
-                        name: '0-69',
-                        code: '0-69'
-                    }, {
-                        name: '70-139',
-                        code: '70-139'
-                    }, {
-                        name: '140-199',
-                        code: '140-199'
-                    }, {
-                        name: '200-799',
-                        code: '200-799'
-                    }, {
-                        name: '2300-7399',
-                        code: '2030-7139'
-                    }, {
-                        name: '212-72199',
-                        code: '2030-7939'
-                    }, {
-                        name: '12-7399',
-                        code: '2030-7939'
-                    }, {
-                        name: '2300-22',
-                        code: '2030-7939'
-                    }]
-                }
+
             }
         },
         computed: {
             ...mapState({
-
+                others: state => state.filter.others,
+                category: state => state.filter.category,
+                select: state => state.filter.select
             })
         },
-        created(){
+        created() {
             this.fetchFilterOptions(this.keyword)
         },
         mounted() {
 
         },
         methods: {
+            onSelect(v){
+                this.doSelect(v)
+            },
             ...mapActions({
-                fetchFilterOptions:'filter/fetchFilterOptions'
+                fetchFilterOptions: 'filter/fetchFilterOptions',
+                doSelect: 'filter/doSelect'
             })
         },
         components: {

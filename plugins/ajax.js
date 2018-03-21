@@ -13,6 +13,8 @@ export default {
             type = 'json'
         } else if (url.indexOf('get-search-goods') > -1) {
             type = 'json'
+        } else if (url.indexOf('get-filter-info') > -1) {
+            type = 'json'
         }
         return new Promise((resolve, reject) => {
             loading && LOADING('show')

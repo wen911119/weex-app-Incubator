@@ -1,26 +1,28 @@
 <template>
     <div class="filter-fragment">
         <div class="flex flex-row flex-v-center title">
-            <text class="flex-1 text36">品牌</text>
+            <text class="flex-1 text36" :class="[selectInfo?'select':'']">{{info.name}}</text>
             <div class="action flex flex-row flex-v-center">
                 <text class="all sub-text text28">全部</text>
                 <text class="iconfont text30 text">&#xe607;</text>
             </div>
         </div>
         <div class="content flex flex-row">
-            <text class="text28 text item" v-for="(item,index) in content" :class="['item-'+(index+1)]" :key="item.code" @click="emit(item.code)">{{item.name}}</text>
+            <text class="text28 text item" v-for="(item,index) in content" :class="['item-'+(index+1),selectInfo===item.code?'select':'']"
+                :key="item.code" @click="emit(item.code)">{{item.name}}</text>
         </div>
     </div>
 </template>
 
 <script>
-    import { mapState, mapActions } from 'vuex'
-
-
     export default {
         props: {
             info: {
                 type: Object,
+                required: true
+            },
+            selectInfo: {
+                type: String,
                 required: true
             }
         },
@@ -33,26 +35,21 @@
             content: function () {
                 let ret = []
                 if (this.info.value && this.info.value.length && this.info.value.length > 6) {
-                    ret = this.info.value.slice(0, 6)
+                    ret = this.info.value.filter(item => item && item.code).slice(0, 6)
                 } else {
-                    ret = this.info.value
+                    ret = this.info.value.filter(item => item && item.code)
                 }
                 return ret
-            },
-            ...mapState({
-
-            })
-        },
-        mounted() {
-
+            }
         },
         methods: {
             emit(v) {
-                this.$emit('filter', v)
-            },
-            ...mapActions({
-
-            })
+                if ((typeof this.info.code) === 'string') {
+                    this.$emit('select', { type: this.info.name, value: v })
+                } else {
+                    this.$emit('select', { type: this.info.name, value: `${this.info.code}-${v}` })
+                }
+            }
         }
     }
 </script>
@@ -144,6 +141,10 @@
         height: 102px;
     }
 
+    .select {
+        color: #f8584f;
+    }
+
     .content {
         flex-wrap: wrap;
     }
@@ -159,7 +160,9 @@
         margin-right: 14px;
         margin-bottom: 30px;
     }
-    .item-3,.item-6{
+
+    .item-3,
+    .item-6 {
         margin-right: 0;
     }
 </style>
