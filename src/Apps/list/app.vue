@@ -1,5 +1,6 @@
 <template>
     <div class="flex flex-column">
+        <status-bar bgColor="#f7f7f7"></status-bar>
         <filters-bar @filter="openRightPopup" @filterChange="filterChange" @switch="toggleListType"></filters-bar>
         <list class="flex-1" @loadmore="loadmore" loadmoreoffset=10 :show-scrollbar="false">
             <cell ref="listTop"></cell>
@@ -7,7 +8,7 @@
                 <text style="height:150px;">{{item.productName}}</text>
             </cell>
         </list>
-        <wxc-popup :show="isRightShow" :animation="{duration:200}" :overlay-cfg="{opacity:0.2,duration:200}" @wxcPopupOverlayClicked="popupOverlayRightClick"
+        <wxc-popup :show="isRightShow" :animation="{duration:150}" :overlay-cfg="{opacity:0.2,duration:150}" @wxcPopupOverlayClicked="popupOverlayRightClick"
             pos="right" width="645">
             <filter-panel :keyword="conditionsBackup.keyword" v-if="conditionsBackup.keyword"></filter-panel>
         </wxc-popup>
@@ -18,6 +19,8 @@
     import navigator from '../../../plugins/navigator'
     import FiltersBar from './components/filtersBar.vue'
     import FilterPanel from './components/filter/app.vue'
+    import StatusBar from '../../components/StatusBar.vue'
+    
     import { WxcPopup, WxcButton, WxcStepper } from 'weex-ui'
     import { mapState, mapActions } from 'vuex'
 
@@ -52,11 +55,12 @@
         mounted() {
             let self = this
             this.$getNavigatorInfo().then(function (data) {
+                console.log(data, 3222222)
                 self.conditionsBackup.keyword = data.keyword
                 self.conditionsBackup.currentPage = self.currentPage + 1
                 self.fetchGoodsData(self.conditionsBackup)
-
-
+            }).catch(function (e) {
+                console.log(e)
             })
         },
         methods: {
@@ -88,7 +92,8 @@
             FilterPanel,
             WxcPopup,
             WxcButton,
-            WxcStepper
+            WxcStepper,
+            StatusBar
         }
     }
 </script>

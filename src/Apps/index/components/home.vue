@@ -1,5 +1,6 @@
 <template>
     <div class="home-page flex flex-column flex-1">
+        <status-bar></status-bar>
         <search-bar :search="search"></search-bar>
         <div class="flex-1">
             <scroller class="scroller flex-1" @loadmore="loadmore" show-scrollbar=false ref="scroller" loadmoreoffset=100>
@@ -32,6 +33,7 @@
     import Panel from './panel.vue'
     import Goto from '@/components/Goto'
     import navigator from '../../../../plugins/navigator'
+    import StatusBar from '../../../components/StatusBar.vue'
 
     export default {
         data() {
@@ -60,7 +62,7 @@
             ...mapActions({
                 fetchImageList: 'home/fetchImageList'
             }),
-            loadmore(){
+            loadmore() {
                 const modal = weex.requireModule('modal')
                 modal.toast({
                     message: 'bottom',
@@ -68,7 +70,7 @@
                 })
                 this.$refs.panel.detect()
             },
-            panelUpdate(){
+            panelUpdate() {
                 this.$refs.scroller.updateLayout && this.$refs.scroller.updateLayout()
             },
             goto() {
@@ -86,7 +88,8 @@
             Panel,
             WxcButton,
             WxcPopup,
-            Goto
+            Goto,
+            StatusBar
         }
     }
 </script>

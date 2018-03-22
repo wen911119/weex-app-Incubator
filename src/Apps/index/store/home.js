@@ -38,8 +38,9 @@ const Home = {
             }).catch(function (e) {
                 const modal = weex.requireModule('modal')
                 modal.toast({
-                    message: '网络错误' + e,
-                    duration: 0.8
+                    message: '网络错误:' + JSON.stringify(e),
+                    
+                    duration: 9.8
                 })
             })
         },

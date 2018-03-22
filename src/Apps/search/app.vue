@@ -1,5 +1,6 @@
 <template>
     <div class="search-app flex flex-column">
+        <status-bar bgColor="#f7f7f7"></status-bar>
         <div class="input-box flex flex-row flex-v-center">
             <div class="close-icon flex flex-x-center" @click="close">
                 <text class="iconfont close-icon-text">&#xe611;</text>
@@ -28,6 +29,8 @@
 <script>
     import Associate from './components/associate.vue'
     import navigator from '../../../plugins/navigator'
+    import StatusBar from '../../components/StatusBar.vue'
+
 
     export default {
         name: 'App',
@@ -65,7 +68,8 @@
             }
         },
         components: {
-            Associate
+            Associate,
+            StatusBar
         }
     }
 </script>

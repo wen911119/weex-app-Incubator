@@ -10,11 +10,11 @@
             </div>
         </div>
         <scroller class="flex-1" :show-scrollbar="false">
-            <fragment @select="onSelect" :info="item" v-for="item in others" :selectInfo="select[item.name] || ''" :key="item.code"></fragment>
+            <fragment @select="onSelect" :info="item" v-for="item in others" :selectInfo="select[item.name] || {}" :key="item.code"></fragment>
         </scroller>
 
         <div class="bottom-btns flex flex-row">
-            <div class="btn-reset flex-1 flex flex-x-center">
+            <div class="btn-reset flex-1 flex flex-x-center" @click="resetSelect">
                 <text>重置</text>
             </div>
             <div class="btn-confirm flex-1 flex flex-x-center">
@@ -51,15 +51,22 @@
             this.fetchFilterOptions(this.keyword)
         },
         mounted() {
-
+ 
         },
         methods: {
-            onSelect(v){
+            onSelect(v) {
                 this.doSelect(v)
+                this.updateFilter()
+            },
+            resetSelect(){
+                this.reset()
+                this.updateFilter()
             },
             ...mapActions({
                 fetchFilterOptions: 'filter/fetchFilterOptions',
-                doSelect: 'filter/doSelect'
+                doSelect: 'filter/doSelect',
+                updateFilter:'filter/updateFilter',
+                reset:'filter/reset'
             })
         },
         components: {

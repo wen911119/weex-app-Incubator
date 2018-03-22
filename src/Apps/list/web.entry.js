@@ -21,7 +21,7 @@ const myMixin = {
                             reject(err)
                         }
                     } else {
-                        reject()
+                        reject(e)
                     }
                 })
             })

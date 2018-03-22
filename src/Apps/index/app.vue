@@ -42,9 +42,11 @@
             })
         },
         created() {
-            const tabPageHeight = Utils.env.getPageHeight();
+            console.log(weex.config.env.deviceHeight, 99999991111222)
+            // const tabPageHeight = Utils.env.getPageHeight();
             // 如果页面没有导航栏，可以用下面这个计算高度的方法
-            // const tabPageHeight = env.deviceHeight / env.deviceWidth * 750;
+            const tabPageHeight = weex.config.env.deviceHeight / weex.config.env.deviceWidth * 750;
+            console.log(tabPageHeight, 99999991111222)
             const { tabStyles } = this;
             this.contentStyle = { height: (tabPageHeight - tabStyles.height) + 'px' };
         },

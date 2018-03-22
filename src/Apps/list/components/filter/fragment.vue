@@ -1,15 +1,18 @@
 <template>
     <div class="filter-fragment">
         <div class="flex flex-row flex-v-center title">
-            <text class="flex-1 text36" :class="[selectInfo?'select':'']">{{info.name}}</text>
+            <div class="flex-1 flex flex-row flex-v-center">
+                <text class="text36">{{info.name}}</text>
+                <text style="margin-left:30px" class="text30" :class="[selectInfo?'select':'']" v-if="selectInfo.name">{{selectInfo.name}}</text>
+            </div>
             <div class="action flex flex-row flex-v-center">
                 <text class="all sub-text text28">全部</text>
                 <text class="iconfont text30 text">&#xe607;</text>
             </div>
         </div>
         <div class="content flex flex-row">
-            <text class="text28 text item" v-for="(item,index) in content" :class="['item-'+(index+1),selectInfo===item.code?'select':'']"
-                :key="item.code" @click="emit(item.code)">{{item.name}}</text>
+            <text class="text28 text item" v-for="(item,index) in content" :class="['item-'+(index+1),selectInfo.code===item.code?'select':'']"
+                :key="item.code" @click="emit(item)">{{item.name}}</text>
         </div>
     </div>
 </template>
@@ -22,8 +25,10 @@
                 required: true
             },
             selectInfo: {
-                type: String,
-                required: true
+                type: Object,
+                default:function(){
+                    return {}
+                }
             }
         },
         data() {
@@ -44,11 +49,13 @@
         },
         methods: {
             emit(v) {
-                if ((typeof this.info.code) === 'string') {
-                    this.$emit('select', { type: this.info.name, value: v })
-                } else {
-                    this.$emit('select', { type: this.info.name, value: `${this.info.code}-${v}` })
-                }
+                console.log(v)
+                // if ((typeof this.info.code) === 'string') {
+                //     this.$emit('select', { type: this.info.name, value: v })
+                // } else {
+                //     this.$emit('select', { type: this.info.name, value: `${this.info.code}-${v}` })
+                // }
+                this.$emit('select', { type: this.info.name, value: v, typeCode: this.info.code })
             }
         }
     }
