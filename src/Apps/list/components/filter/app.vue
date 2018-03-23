@@ -1,23 +1,38 @@
 <template>
     <div class="flex flex-column flex-1">
-        <div class="top">
-            <div class="category flex flex-row flex-v-center">
+        <div class="top" :class="[moreInfo.title?'more-info-title':'']">
+            <div class="flex flex-row flex-v-center" v-if="moreInfo.title">
+                <text class="iconfont text30 text flex-1" style="padding-left:20px" @click="closeMoreInfo">&#xe60c;</text>
+                <text style="text-align:center">全部{{moreInfo.title}}</text>
+                <text class="flex-1"></text>
+            </div>
+            <div class="category flex flex-row flex-v-center" v-else>
                 <text class="flex-1">分类</text>
-                <div class="flex flex-row flex-v-center">
+                <div class="flex flex-row flex-v-center" @click="showAll({title:'分类',content:category})">
                     <text class="all sub-text text28">全部</text>
                     <text class="iconfont text30 text">&#xe607;</text>
                 </div>
             </div>
         </div>
-        <scroller class="flex-1" :show-scrollbar="false">
-            <fragment @select="onSelect" :info="item" v-for="item in others" :selectInfo="select[item.name] || {}" :key="item.code"></fragment>
+        <scroller class="flex-1" :show-scrollbar="false" v-if="moreInfo.title">
+            <div class="category-more" v-if="moreInfo.title==='分类'">
+                <text>分类</text>
+            </div>
+            <div class="more" v-else>
+                <text @click="onSelect({type:moreInfo.title,value:moreInfo.content[index], typeCode:moreInfo.typeCode})" class="more-item text text34"
+                    v-for="(item,index) in moreInfo.content" :class="[(select[moreInfo.title]&&select[moreInfo.title].code===item.code)?'select':'']">{{item && item.name}}</text>
+            </div>
+        </scroller>
+        <scroller class="flex-1" :show-scrollbar="false" v-else>
+            <fragment @showAll="showAll" @select="onSelect" :info="item" v-for="item in others" :selectInfo="select[item.name] || {}"
+                :key="item.code"></fragment>
         </scroller>
 
         <div class="bottom-btns flex flex-row">
             <div class="btn-reset flex-1 flex flex-x-center" @click="resetSelect">
                 <text>重置</text>
             </div>
-            <div class="btn-confirm flex-1 flex flex-x-center">
+            <div class="btn-confirm flex-1 flex flex-x-center" @click="apply">
                 <text style="color:#fff">确认</text>
             </div>
         </div>
@@ -37,7 +52,11 @@
         },
         data() {
             return {
-
+                moreInfo: {
+                    title: '',
+                    content: [],
+                    typeCode: ''
+                }
             }
         },
         computed: {
@@ -51,22 +70,35 @@
             this.fetchFilterOptions(this.keyword)
         },
         mounted() {
- 
+
         },
         methods: {
             onSelect(v) {
                 this.doSelect(v)
                 this.updateFilter()
+                this.moreInfo.title = ''
             },
-            resetSelect(){
+            resetSelect() {
                 this.reset()
                 this.updateFilter()
+                this.$emit('confirm', {})
+            },
+            apply() {
+                this.$emit('confirm', this.select)
+            },
+            showAll({ title, content, typeCode }) {
+                this.moreInfo.title = title
+                this.moreInfo.typeCode = typeCode
+                this.moreInfo.content = content.filter(item => (item && item.name))
+            },
+            closeMoreInfo() {
+                this.moreInfo.title = ''
             },
             ...mapActions({
                 fetchFilterOptions: 'filter/fetchFilterOptions',
                 doSelect: 'filter/doSelect',
-                updateFilter:'filter/updateFilter',
-                reset:'filter/reset'
+                updateFilter: 'filter/updateFilter',
+                reset: 'filter/reset'
             })
         },
         components: {
@@ -177,5 +209,22 @@
 
     .btn-confirm {
         background-color: #f8584f;
+    }
+
+    .more-info-title {
+        border-bottom-width: 1px;
+        border-bottom-color: #eaeaea;
+    }
+
+    .more-item {
+        height: 103px;
+        line-height: 102px;
+        padding-left: 35px;
+        border-bottom-width: 1px;
+        border-bottom-color: #eaeaea;
+    }
+
+    .select {
+        color: #f8584f;
     }
 </style>

@@ -5,8 +5,8 @@
                 <text class="text36">{{info.name}}</text>
                 <text style="margin-left:30px" class="text30" :class="[selectInfo?'select':'']" v-if="selectInfo.name">{{selectInfo.name}}</text>
             </div>
-            <div class="action flex flex-row flex-v-center">
-                <text class="all sub-text text28">全部</text>
+            <div class="action flex flex-row flex-v-center" v-if="info.value.length>6">
+                <text class="all sub-text text28" @click="showAll">全部</text>
                 <text class="iconfont text30 text">&#xe607;</text>
             </div>
         </div>
@@ -26,7 +26,7 @@
             },
             selectInfo: {
                 type: Object,
-                default:function(){
+                default: function () {
                     return {}
                 }
             }
@@ -49,13 +49,11 @@
         },
         methods: {
             emit(v) {
-                console.log(v)
-                // if ((typeof this.info.code) === 'string') {
-                //     this.$emit('select', { type: this.info.name, value: v })
-                // } else {
-                //     this.$emit('select', { type: this.info.name, value: `${this.info.code}-${v}` })
-                // }
                 this.$emit('select', { type: this.info.name, value: v, typeCode: this.info.code })
+            },
+            showAll() {
+                console.log(this.info)
+                this.$emit('showAll', { title: this.info.name, content: this.info.value, typeCode: this.info.code })
             }
         }
     }

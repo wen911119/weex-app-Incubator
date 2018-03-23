@@ -10,7 +10,7 @@
         </list>
         <wxc-popup :show="isRightShow" :animation="{duration:150}" :overlay-cfg="{opacity:0.2,duration:150}" @wxcPopupOverlayClicked="popupOverlayRightClick"
             pos="right" width="645">
-            <filter-panel :keyword="conditionsBackup.keyword" v-if="conditionsBackup.keyword"></filter-panel>
+            <filter-panel :keyword="conditionsBackup.keyword" v-if="conditionsBackup.keyword" @confirm="filterConfirm"></filter-panel>
         </wxc-popup>
     </div>
 </template>
@@ -20,7 +20,7 @@
     import FiltersBar from './components/filtersBar.vue'
     import FilterPanel from './components/filter/app.vue'
     import StatusBar from '../../components/StatusBar.vue'
-    
+
     import { WxcPopup, WxcButton, WxcStepper } from 'weex-ui'
     import { mapState, mapActions } from 'vuex'
 
@@ -55,7 +55,6 @@
         mounted() {
             let self = this
             this.$getNavigatorInfo().then(function (data) {
-                console.log(data, 3222222)
                 self.conditionsBackup.keyword = data.keyword
                 self.conditionsBackup.currentPage = self.currentPage + 1
                 self.fetchGoodsData(self.conditionsBackup)
@@ -72,7 +71,6 @@
             },
             filterChange(filters) {
                 this.conditionsBackup = Object.assign(this.conditionsBackup, filters, { currentPage: 1 })
-                console.log(this.conditionsBackup)
                 this.fetchGoodsData(this.conditionsBackup)
             },
             toggleListType(listType) {
@@ -81,6 +79,11 @@
             loadmore() {
                 console.log('loadmore')
                 this.conditionsBackup = Object.assign(this.conditionsBackup, { currentPage: this.currentPage + 1 })
+                this.fetchGoodsData(this.conditionsBackup)
+            },
+            filterConfirm(v) {
+                this.isRightShow = false
+                this.conditionsBackup = Object.assign(this.conditionsBackup, { filterData: v })
                 this.fetchGoodsData(this.conditionsBackup)
             },
             ...mapActions({
