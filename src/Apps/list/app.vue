@@ -10,7 +10,8 @@
         </list>
         <wxc-popup :show="isRightShow" :animation="{duration:150}" :overlay-cfg="{opacity:0.2,duration:150}" @wxcPopupOverlayClicked="popupOverlayRightClick"
             pos="right" width="645">
-            <filter-panel :keyword="conditionsBackup.keyword" v-if="conditionsBackup.keyword" @confirm="filterConfirm"></filter-panel>
+            <filter-panel></filter-panel>
+            <!-- <filter-panel :keyword="conditionsBackup.keyword" v-if="conditionsBackup.keyword" @confirm="filterConfirm"></filter-panel> -->
         </wxc-popup>
     </div>
 </template>
@@ -18,7 +19,8 @@
 <script>
     import navigator from '../../../plugins/navigator'
     import FiltersBar from './components/filtersBar.vue'
-    import FilterPanel from './components/filter/app.vue'
+    // import FilterPanel from './components/filter/app.vue'
+    import FilterPanel from '../../components/FilterPanel/app.vue'
     import StatusBar from '../../components/StatusBar.vue'
 
     import { WxcPopup, WxcButton, WxcStepper } from 'weex-ui'
