@@ -1,7 +1,7 @@
 const navigator = weex.requireModule('navigator')
 const storage = weex.requireModule('storage')
-// const baseUrl = 'http://192.168.31.10:8081'
-const baseUrl = 'http://10.100.0.39:8081'
+const baseUrl = 'http://192.168.31.10:8081'
+// const baseUrl = 'http://10.100.0.39:8081'
 export default {
     back() {
         if (typeof window === 'object') {

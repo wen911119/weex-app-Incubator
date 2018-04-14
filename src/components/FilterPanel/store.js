@@ -6,10 +6,160 @@ export default {
             interactiveQueue: [],
             pool: {},
             result: {},
-            keyword: ''
+            keyword: '',
+            fetching: false,
+            panel2: {
+                show: false,
+                name: ''
+            },
+            category: {
+                title: '分类',
+                id: 'category',
+                items: [{
+                    cateName: '男装',
+                    cateId: 3,
+                    subs: [{
+                        cateName: '全部'
+                    }, {
+                        cateName: 'T恤',
+                        cateId: 15,
+                        subs: [{
+                            cateName: '全部'
+                        }, {
+                            cateName: 'POLO',
+                            cateId: 110,
+                            subs: []
+                        }]
+                    }]
+                },
+                {
+                    cateName: '女装'
+                }]
+            },
+            fragments: [{
+                title: '品牌',
+                id: 'brand',
+                items: [{
+                    label: '全部品牌',
+                    value: 'all'
+                }, {
+                    label: 'ANMO',
+                    value: 'ANMO'
+                },
+                {
+                    label: '宝媞思',
+                    value: 'BAOTISI'
+                }, {
+                    label: '铂绽',
+                    value: 'BOZHAN'
+                }, {
+                    label: '潮至',
+                    value: 'CHAOZHI'
+                }, {
+                    label: '凡洛',
+                    value: 'FANLUO'
+                }, {
+                    label: '菲铂娅',
+                    value: 'FEIBOYA'
+                }, {
+                    label: '符号公社',
+                    value: 'FUHAOGONGSHE'
+                }]
+            },
+            {
+                title: '品牌',
+                id: 'brand1',
+                items: [{
+                    label: '全部品牌',
+                    value: 'all'
+                }, {
+                    label: 'ANMO',
+                    value: 'ANMO'
+                },
+                {
+                    label: '宝媞思',
+                    value: 'BAOTISI'
+                }, {
+                    label: '铂绽',
+                    value: 'BOZHAN'
+                }, {
+                    label: '潮至',
+                    value: 'CHAOZHI'
+                }, {
+                    label: '凡洛',
+                    value: 'FANLUO'
+                }, {
+                    label: '菲铂娅',
+                    value: 'FEIBOYA'
+                }, {
+                    label: '符号公社',
+                    value: 'FUHAOGONGSHE'
+                }]
+            }, {
+                title: '品牌',
+                id: 'brand2',
+                items: [{
+                    label: '全部品牌',
+                    value: 'all'
+                }, {
+                    label: 'ANMO',
+                    value: 'ANMO'
+                },
+                {
+                    label: '宝媞思',
+                    value: 'BAOTISI'
+                }, {
+                    label: '铂绽',
+                    value: 'BOZHAN'
+                }, {
+                    label: '潮至',
+                    value: 'CHAOZHI'
+                }, {
+                    label: '凡洛',
+                    value: 'FANLUO'
+                }, {
+                    label: '菲铂娅',
+                    value: 'FEIBOYA'
+                }, {
+                    label: '符号公社',
+                    value: 'FUHAOGONGSHE'
+                }]
+            }, {
+                title: '品牌',
+                id: 'brand3',
+                items: [{
+                    label: '全部品牌',
+                    value: 'all'
+                }, {
+                    label: 'ANMO',
+                    value: 'ANMO'
+                },
+                {
+                    label: '宝媞思',
+                    value: 'BAOTISI'
+                }, {
+                    label: '铂绽',
+                    value: 'BOZHAN'
+                }, {
+                    label: '潮至',
+                    value: 'CHAOZHI'
+                }, {
+                    label: '凡洛',
+                    value: 'FANLUO'
+                }, {
+                    label: '菲铂娅',
+                    value: 'FEIBOYA'
+                }, {
+                    label: '符号公社',
+                    value: 'FUHAOGONGSHE'
+                }]
+            }]
         }
     },
     actions: {
+        togglePanel() {
+
+        },
         interactiveChange({ commit, state }, interactive) {
             if (interactive === null) {
                 // reset 操作
@@ -62,7 +212,7 @@ function computeUrl(result, keyword) {
     let shit = 'a1_a2_a3_a4_a5_a6_a7_a8_a9_a10_a11_a12'
     for (let key in result) {
         if (key === '品牌') {
-            shit = shit.replace('a4', resultt[key].code)
+            shit = shit.replace('a4', result[key].code)
         } else if (key === '价格') {
             shit = shit.replace('a3', result[key].code)
         } else if (key === '颜色') {
