@@ -8,10 +8,12 @@ export default {
             result: {},
             keyword: '',
             fetching: false,
+            conditions: {},
             panel2: {
                 show: false,
                 name: ''
             },
+            folds: [],
             category: {
                 title: '分类',
                 id: 'category',
@@ -42,141 +44,20 @@ export default {
                 items: [{
                     label: '全部品牌',
                     value: 'all'
-                }, {
-                    label: 'ANMO',
-                    value: 'ANMO'
-                },
-                {
-                    label: '宝媞思',
-                    value: 'BAOTISI'
-                }, {
-                    label: '铂绽',
-                    value: 'BOZHAN'
-                }, {
-                    label: '潮至',
-                    value: 'CHAOZHI'
-                }, {
-                    label: '凡洛',
-                    value: 'FANLUO'
-                }, {
-                    label: '菲铂娅',
-                    value: 'FEIBOYA'
-                }, {
-                    label: '符号公社',
-                    value: 'FUHAOGONGSHE'
-                }]
-            },
-            {
-                title: '品牌',
-                id: 'brand1',
-                items: [{
-                    label: '全部品牌',
-                    value: 'all'
-                }, {
-                    label: 'ANMO',
-                    value: 'ANMO'
-                },
-                {
-                    label: '宝媞思',
-                    value: 'BAOTISI'
-                }, {
-                    label: '铂绽',
-                    value: 'BOZHAN'
-                }, {
-                    label: '潮至',
-                    value: 'CHAOZHI'
-                }, {
-                    label: '凡洛',
-                    value: 'FANLUO'
-                }, {
-                    label: '菲铂娅',
-                    value: 'FEIBOYA'
-                }, {
-                    label: '符号公社',
-                    value: 'FUHAOGONGSHE'
-                }]
-            }, {
-                title: '品牌',
-                id: 'brand2',
-                items: [{
-                    label: '全部品牌',
-                    value: 'all'
-                }, {
-                    label: 'ANMO',
-                    value: 'ANMO'
-                },
-                {
-                    label: '宝媞思',
-                    value: 'BAOTISI'
-                }, {
-                    label: '铂绽',
-                    value: 'BOZHAN'
-                }, {
-                    label: '潮至',
-                    value: 'CHAOZHI'
-                }, {
-                    label: '凡洛',
-                    value: 'FANLUO'
-                }, {
-                    label: '菲铂娅',
-                    value: 'FEIBOYA'
-                }, {
-                    label: '符号公社',
-                    value: 'FUHAOGONGSHE'
-                }]
-            }, {
-                title: '品牌',
-                id: 'brand3',
-                items: [{
-                    label: '全部品牌',
-                    value: 'all'
-                }, {
-                    label: 'ANMO',
-                    value: 'ANMO'
-                },
-                {
-                    label: '宝媞思',
-                    value: 'BAOTISI'
-                }, {
-                    label: '铂绽',
-                    value: 'BOZHAN'
-                }, {
-                    label: '潮至',
-                    value: 'CHAOZHI'
-                }, {
-                    label: '凡洛',
-                    value: 'FANLUO'
-                }, {
-                    label: '菲铂娅',
-                    value: 'FEIBOYA'
-                }, {
-                    label: '符号公社',
-                    value: 'FUHAOGONGSHE'
                 }]
             }]
         }
     },
     actions: {
-        togglePanel() {
-
-        },
-        interactiveChange({ commit, state }, interactive) {
-            if (interactive === null) {
-                // reset 操作
+        doFilter({ commit, state }, intention) {
+            console.log(intention)
+            if (!state.fetching) {
                 commit({
-                    type: 'interactiveQueue_reset'
+                    type: 'conditions_update',
+                    content: intention
                 })
-            } else {
-                commit({
-                    type: 'interactiveQueue_add',
-                    content: interactive
-                })
+                asyncFetchPoolData(commit, state)
             }
-            commit({
-                type: 'result_update'
-            })
-            // 异步
-            asyncFetchPoolData(commit, state)
         },
         init({ commit, state }, keyword) {
             commit({
@@ -190,14 +71,32 @@ export default {
         keyword_backup(state, payload) {
             state.keyword = payload.content
         },
-        interactiveQueue_add(state, payload) {
-            state.interactiveQueue.push(payload.content)
-        },
-        interactiveQueue_reset(state) {
-            state.interactiveQueue = []
+        conditions_update(state, payload) {
+            state.fetching = true
+            if (payload.content) {
+                state.conditions[payload.content.pid] = payload.content.target
+            } else {
+                // reset
+                state.conditions = {}
+            }
         },
         pool_update(state, payload) {
-            state.pool = payload.content
+            console.log(payload.content, 6666666)
+            //state.pool = payload.content
+            state.category.items = payload.content.cate
+            state.fragments = payload.content.others.filter(o => o.value.length > 0).map(item => {
+                return {
+                    title: item.name,
+                    id: item.code,
+                    items: item.value.filter(i => i !== null).map(j => {
+                        return {
+                            label: j.name,
+                            value: j.code
+                        }
+                    })
+                }
+            })
+            state.fetching = false
         },
         result_update(state) {
             state.result = f1(state.interactiveQueue, state.pool)
@@ -208,17 +107,19 @@ export default {
     }
 }
 
-function computeUrl(result, keyword) {
+function computeUrl(conditions, keyword) {
     let shit = 'a1_a2_a3_a4_a5_a6_a7_a8_a9_a10_a11_a12'
-    for (let key in result) {
-        if (key === '品牌') {
-            shit = shit.replace('a4', result[key].code)
-        } else if (key === '价格') {
-            shit = shit.replace('a3', result[key].code)
-        } else if (key === '颜色') {
-            shit = shit.replace('a5', result[key].code)
+    for (let key in conditions) {
+        if (key === 'brand') {
+            shit = shit.replace('a4', conditions[key].value)
+        } else if (key === 'price') {
+            shit = shit.replace('a3', conditions[key].value)
+        } else if (key === 'color') {
+            shit = shit.replace('a5', conditions[key].value)
+        } else if (key === 'category') {
+            shit = shit.replace('a2', conditions[key].value)
         } else {
-            shit = shit + `_${result[key].typeCode}-${result[key].code}`
+            shit = shit + `_${key}-${conditions[key].value}`
         }
     }
     shit = shit.replace(/a\d\d?/g, 'a')
@@ -235,7 +136,7 @@ function f1(interactiveQueue, pool) {
 }
 
 function asyncFetchPoolData(commit, state) {
-    const url = computeUrl(state.result, state.keyword)
+    const url = computeUrl(state.conditions, state.keyword)
     ajax.get(url).then(function (ret) {
         if (ret.code === 1 && ret.data && ret.data.cate && ret.data.others) {
             commit({

@@ -3,9 +3,9 @@
         <div class="gap"></div>
         <div class="category flex flex-row flex-v-center">
             <text class="text text30">分类</text>
-            <text class="flex-1 select">男装/毛衣</text>
+            <text class="flex-1 select">{{conditions['category']&&conditions['category'].label}}</text>
             <div class="flex flex-row flex-v-center" @click="gotoPanel2(category)">
-                <text class="all sub-text text28">全部</text>
+                <text class="all sub-text text24">全部</text>
                 <text class="iconfont text30 text">&#xe607;</text>
             </div>
         </div>
@@ -14,17 +14,18 @@
             <div class="filter-fragment" v-for="fragment in fragments" :key="fragment.id">
                 <div class="flex flex-row flex-v-center fragment-title">
                     <div class="flex-1 flex flex-row flex-v-center">
-                        <text class="text36">{{fragment.title}}</text>
-                        <text class="text30 select">Me&City</text>
+                        <text class="text30">{{fragment.title}}</text>
+                        <text class="text30 select">{{conditions[fragment.id]&&conditions[fragment.id].label}}</text>
                     </div>
                     <div class="action flex flex-row flex-v-center" v-if="fragment.items.length>6" @click="gotoPanel2(fragment)">
-                        <text class="all sub-text text28">全部</text>
+                        <text class="all sub-text text24">全部</text>
                         <text class="iconfont text30 text">&#xe607;</text>
                     </div>
                 </div>
                 <div class="items flex flex-row">
                     <template v-for="(item,index) in fragment.items">
-                        <text v-if="index<6" class="text28 text item" :class="['item-'+(index+1)]" :key="item.value">{{item.label}}</text>
+                        <text @click="doFilter({target:item, pid:fragment.id})" v-if="index<6" class="text24 sub-text item" :class="['item-'+(index+1),(conditions[fragment.id]&&conditions[fragment.id].value===item.value)?'active':'']"
+                            :key="item.value">{{item.label}}</text>
                     </template>
                 </div>
             </div>
@@ -52,14 +53,20 @@
         computed: {
             ...mapState({
                 fragments: state => state._filter_panel_.fragments,
-                category: state => state._filter_panel_.category
+                category: state => state._filter_panel_.category,
+                conditions: state => state._filter_panel_.conditions
             })
         },
         methods: {
+            ...mapActions({
+                doFilter: '_filter_panel_/doFilter'
+            }),
             gotoPanel2(title) {
                 this.$emit('more', title)
             },
-            reset() { },
+            reset() {
+                this.doFilter()
+            },
             confirm() { }
         }
     }
@@ -154,7 +161,11 @@
     .select {
         color: #f8584f;
         margin-left: 30px;
-        font-size: 12px;
+        font-size: 24px;
+    }
+
+    .active {
+        color: #f8584f;
     }
 
     .all {
