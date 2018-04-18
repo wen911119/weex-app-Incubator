@@ -2,7 +2,7 @@
     <div class="flex flex-column">
         <status-bar bgColor="#f7f7f7"></status-bar>
         <filters-bar @filter="openRightPopup" @filterChange="filterChange" @switch="toggleListType"></filters-bar>
-        <list class="flex-1 flex flex-row" @loadmore="loadmore" loadmoreoffset=10 :show-scrollbar="false">
+        <list class="flex-1" @loadmore="loadmore" loadmoreoffset=10 :show-scrollbar="false">
             <cell ref="listTop"></cell>
             <cell v-for="item in goods">
                 <goods-item :goods="item"></goods-item>

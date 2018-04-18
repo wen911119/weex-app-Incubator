@@ -2,18 +2,20 @@
     <div class="goods-item-02 flex flex-row">
         <image :src="goods.imgUrl_300_300.replace('pic.banggo', 'pic.ruiyun2015').replace('w_300', 'w_160').replace('h_300', 'h_160').replace('m_lfit', 'm_fill')"
             class="goods-img"></image>
-        <div class="desc flex-1">
-            <div class="row-1 flex flex-row">
+        <div class="desc flex-1 flex flex-column">
+            <div class="row-1 flex flex-row flex-v-center">
                 <text class="tag text24" v-if="goods.displayTag">{{goods.displayTag}}</text>
-                <text>{{goods.discount}}</text>
+                <text class="text24 discount">{{parseInt(goods.discount)/10}}折</text>
             </div>
-            <div class="brand">
-                <text>{{goods.brandName}}</text>
+            <div class="brand flex flex-row flex-v-center">
+                <text class="text24 sub-text">{{goods.brandName}}</text>
             </div>
-            <text class="goods-name">{{ goods.productName}}</text>
-            <div class="price flex flex-row">
-                <text class="goods-price">¥{{ goods.salesPrice}}</text>
-                <text class="goods-price">¥{{ goods.marketPrice}}</text>
+            <div class="name flex-1">
+                <text class="text32">{{ goods.productName}}</text>
+            </div>
+            <div class="price flex flex-row flex-v-center">
+                <text class="sales-price text text34">¥{{ goods.salesPrice}}</text>
+                <text class="market-price sub-text text28">¥{{ goods.marketPrice}}</text>
             </div>
         </div>
     </div>
@@ -122,11 +124,29 @@
         margin-right: 28px;
     }
 
+    .brand {
+        height: 50px;
+    }
+
     .tag {
         color: #f8584f;
         border-width: 1px;
         border-color: #f8584f;
         background-color: #fff1ee;
         margin-right: 8px;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    .discount {
+        color: #fff;
+        background-color: #f8584f;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .market-price {
+        text-decoration: line-through;
+        margin-left: 20px;
     }
 </style>

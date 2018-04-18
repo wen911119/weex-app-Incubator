@@ -15,7 +15,7 @@
             </div>
         </div>
         <scroller class="flex-1" show-scrollbar=false v-if="keyword">
-            <associate :seed="keyword"></associate>
+            <associate :seed="keyword" @select="gotoList"></associate>
         </scroller>
         <div v-else>
             <text class="hot-box-title text28">热门搜索:</text>

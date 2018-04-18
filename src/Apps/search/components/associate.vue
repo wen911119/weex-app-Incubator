@@ -1,6 +1,6 @@
 <template>
     <div class="associate-box">
-        <div class="item flex flex-row flex-v-center" v-for="item in associated">
+        <div class="item flex flex-row flex-v-center" v-for="item in associated" @click="$emit('select',item.word)">
             <text class="item-text flex-1">{{item.word}}</text>
             <text class="item-text">约{{item.count}}条结果</text>
         </div>
