@@ -3,17 +3,10 @@ export default {
     namespaced: true,
     state: function () {
         return {
-            interactiveQueue: [],
             pool: {},
-            result: {},
             keyword: '',
             fetching: false,
             conditions: {},
-            panel2: {
-                show: false,
-                name: ''
-            },
-            folds: [],
             category: {
                 title: '分类',
                 id: 'category',
@@ -42,7 +35,7 @@ export default {
                 title: '品牌',
                 id: 'brand',
                 items: [{
-                    label: '全部品牌',
+                    label: '全部',
                     value: 'all'
                 }]
             }]
@@ -81,8 +74,6 @@ export default {
             }
         },
         pool_update(state, payload) {
-            console.log(payload.content, 6666666)
-            //state.pool = payload.content
             state.category.items = payload.content.cate
             state.fragments = payload.content.others.filter(o => o.value.length > 0).map(item => {
                 return {
@@ -97,19 +88,16 @@ export default {
                 }
             })
             state.fetching = false
-        },
-        result_update(state) {
-            state.result = f1(state.interactiveQueue, state.pool)
         }
-    },
-    modules: {
-
     }
 }
 
 function computeUrl(conditions, keyword) {
     let shit = 'a1_a2_a3_a4_a5_a6_a7_a8_a9_a10_a11_a12'
     for (let key in conditions) {
+        if (conditions[key].value === 'all') {
+            continue
+        }
         if (key === 'brand') {
             shit = shit.replace('a4', conditions[key].value)
         } else if (key === 'price') {
@@ -125,14 +113,6 @@ function computeUrl(conditions, keyword) {
     shit = shit.replace(/a\d\d?/g, 'a')
     const url = `/banggo/search/get-filter-info/${shit}.shtml?discountRate=a&word=${keyword}`
     return url
-}
-
-function f2(result) {
-    return {}
-}
-
-function f1(interactiveQueue, pool) {
-    return {}
 }
 
 function asyncFetchPoolData(commit, state) {

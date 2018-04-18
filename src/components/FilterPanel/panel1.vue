@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="gap"></div>
-        <scroller class="flex-1" :show-scrollbar="false">
+        <scroller class="flex-1 scroller2" :show-scrollbar="false">
             <div class="filter-fragment" v-for="fragment in fragments" :key="fragment.id">
                 <div class="flex flex-row flex-v-center fragment-title">
                     <div class="flex-1 flex flex-row flex-v-center">
@@ -67,7 +67,9 @@
             reset() {
                 this.doFilter()
             },
-            confirm() { }
+            confirm() { 
+                this.$emit('confirm')
+            }
         }
     }
 </script>
@@ -213,5 +215,9 @@
 
     .btn-confirm {
         background-color: #f8584f;
+    }
+
+    .scroller2{
+        
     }
 </style>

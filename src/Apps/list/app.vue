@@ -10,8 +10,7 @@
         </list>
         <wxc-popup :show="isRightShow" :animation="{duration:150}" :overlay-cfg="{opacity:0.2,duration:150}" @wxcPopupOverlayClicked="popupOverlayRightClick"
             pos="right" width="645">
-            <filter-panel></filter-panel>
-            <!-- <filter-panel :keyword="conditionsBackup.keyword" v-if="conditionsBackup.keyword" @confirm="filterConfirm"></filter-panel> -->
+            <filter-panel :keyword="conditionsBackup.keyword" class="flex-1" @confirm="applyFilter"></filter-panel>
         </wxc-popup>
     </div>
 </template>
@@ -30,7 +29,7 @@
     export default {
         data() {
             return {
-                isRightShow: true,
+                isRightShow: false,
                 keyword: '',
                 conditionsBackup: {}
             }
@@ -65,6 +64,11 @@
             })
         },
         methods: {
+            applyFilter(filter) {
+                this.conditionsBackup = Object.assign(this.conditionsBackup, { filterData: filter }, { currentPage: 1 })
+                this.fetchGoodsData(this.conditionsBackup)
+                this.isRightShow = false
+            },
             openRightPopup() {
                 this.isRightShow = true
             },

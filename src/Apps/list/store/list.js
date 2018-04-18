@@ -1,35 +1,40 @@
 import ajax from '../../../../plugins/ajax.js'
 function pure(conditions) {
-    let ret = 'a1_a2_a3_a4_a5_a6_a7_a8_a9_a10_a11_a12'
+    let shit = 'a1_a2_a3_a4_a5_a6_a7_a8_a9_a10_a11_a12'
     switch (conditions.index) {
         case 2:
-            ret = ret.replace('a8', '3').replace('a9', '-1')
+            shit = shit.replace('a8', '3').replace('a9', '-1')
             break
         case 3:
-            ret = ret.replace('a8', '2').replace('a9', '-1')
+            shit = shit.replace('a8', '2').replace('a9', '-1')
             break
         case 4:
-            ret = ret.replace('a8', '1').replace('a9', '1')
+            shit = shit.replace('a8', '1').replace('a9', '1')
             break
         case 5:
-            ret = ret.replace('a8', '1').replace('a9', '-1')
+            shit = shit.replace('a8', '1').replace('a9', '-1')
             break
     }
     if (conditions.filterData) {
         for (let key in conditions.filterData) {
-            if (key === '品牌') {
-                ret = ret.replace('a4', conditions.filterData[key].code)
-            } else if (key === '价格') {
-                ret = ret.replace('a3', conditions.filterData[key].code)
-            } else if (key === '颜色') {
-                ret = ret.replace('a5', conditions.filterData[key].code)
+            if (conditions.filterData[key].value === 'all') {
+                continue
+            }
+            if (key === 'brand') {
+                shit = shit.replace('a4', conditions.filterData[key].value)
+            } else if (key === 'price') {
+                shit = shit.replace('a3', conditions.filterData[key].value)
+            } else if (key === 'color') {
+                shit = shit.replace('a5', conditions.filterData[key].value)
+            } else if (key === 'category') {
+                shit = shit.replace('a2', conditions.filterData[key].value)
             } else {
-                ret = ret + `_${conditions.filterData[key].typeCode}-${conditions.filterData[key].code}`
+                shit = shit + `_${key}-${conditions.filterData[key].value}`
             }
         }
     }
-    ret = ret.replace(/a\d\d?/g, 'a')
-    return ret
+    shit = shit.replace(/a\d\d?/g, 'a')
+    return shit
 }
 const List = {
     namespaced: true,

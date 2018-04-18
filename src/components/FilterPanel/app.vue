@@ -1,7 +1,7 @@
 <template>
-    <div class="filter-panel flex-1">
-        <panel1 class="panel-1" v-if="!panel2.show" @more="openPanel2"></panel1>
-        <panel2 class="panel-2" v-else :content="panel2.content" @back="openPanel1"></panel2>
+    <div class="filter-panel flex-1 flex flex-column">
+        <panel1 class="panel-1 flex-1" v-if="!panel2.show" @more="openPanel2" @confirm="confirm"></panel1>
+        <panel2 class="panel-2 flex-1" v-else :content="panel2.content" @back="openPanel1"></panel2>
     </div>
 </template>
 
@@ -11,6 +11,12 @@
     import panel1 from './panel1.vue'
     import panel2 from './panel2.vue'
     export default {
+        props: {
+            keyword: {
+                type: String,
+                required: true
+            }
+        },
         data() {
             return {
                 panel2: {
@@ -20,9 +26,9 @@
             }
         },
         computed: {
-            // ...mapState({
-            //     panel2: state => state._filter_panel_.panel2
-            // })
+            ...mapState({
+                conditions: state => state._filter_panel_.conditions
+            })
         },
         beforeCreate() {
             // 避免重复注册
@@ -31,9 +37,12 @@
             }
         },
         created() {
-            this.init('大衣')
+            this.init(this.keyword)
         },
         methods: {
+            confirm() {
+                this.$emit('confirm', this.conditions)
+            },
             openPanel1() {
                 this.panel2.show = false
                 this.panel2.content = {}

@@ -15,12 +15,18 @@
                         <text class="iconfont text text30" :class="[folds.indexOf(level1.cateId)>-1?'open':'']" v-if="level1.subs && level1.subs.length>0">&#xe60e;</text>
                     </div>
                     <div class="level-2-box" v-if="level1.subs && folds.indexOf(level1.cateId)>-1">
+                        <div class="tree-row flex flex-row flex-v-center" @click="onCategorySelect(level1.cateId, level1.cateName)">
+                            <text class="flex-1">全部</text>
+                        </div>
                         <div class="level-2-item" v-for="level2 in level1.subs">
                             <div class="tree-row flex flex-row flex-v-center" @click="toggle(level2.cateId,level1.cateId)">
                                 <text class="flex-1">{{level2.cateName}}</text>
                                 <text class="iconfont text text30" :class="[folds.indexOf(level2.cateId)>-1?'open':'']" v-if="level2.subs && level2.subs.length>0">&#xe60e;</text>
                             </div>
                             <div class="level-3-box" v-if="level2.subs && folds.indexOf(level2.cateId)>-1">
+                                <div class="tree-row flex flex-row flex-v-center" @click="onCategorySelect(level2.cateId, level1.cateName+'/'+level2.cateName)">
+                                    <text class="flex-1">全部</text>
+                                </div>
                                 <div @click="onCategorySelect(level3.cateId, level1.cateName+'/'+level2.cateName+'/'+level3.cateName)" class="tree-row flex flex-row flex-v-center"
                                     v-for="level3 in level2.subs">
                                     <text class="flex-1" :class="[(conditions['category']&&conditions['category'].value===level3.cateId)?'active':'']">{{level3.cateName}}</text>
@@ -31,8 +37,11 @@
                 </div>
             </div>
             <div class="items-box" v-else>
+                <div @click="onSelect({target:{label:'全部',value:'all'}, pid:content.id})" class="item flex flex-row flex-v-center">
+                    <text class="text text30" :class="[(conditions[content.id]&&conditions[content.id].value==='all')?'active':'']">全部</text>
+                </div>
                 <div @click="onSelect({target:item, pid:content.id})" class="item flex flex-row flex-v-center" v-for="item in content.items">
-                    <text class="text30" :class="[(conditions[content.id]&&conditions[content.id].value===item.value)?'active':'']">{{item.label}}</text>
+                    <text class="text text30" :class="[(conditions[content.id]&&conditions[content.id].value===item.value)?'active':'']">{{item.label}}</text>
                 </div>
             </div>
         </scroller>
