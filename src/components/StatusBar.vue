@@ -18,6 +18,6 @@
 </script>
 <style scoped>
     .status-bar {
-        height: 40px;
+        /* height: 40px; */
     }
 </style>

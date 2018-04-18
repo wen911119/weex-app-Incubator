@@ -2,10 +2,10 @@
     <div class="flex flex-column">
         <status-bar bgColor="#f7f7f7"></status-bar>
         <filters-bar @filter="openRightPopup" @filterChange="filterChange" @switch="toggleListType"></filters-bar>
-        <list class="flex-1" @loadmore="loadmore" loadmoreoffset=10 :show-scrollbar="false">
+        <list class="flex-1 flex flex-row" @loadmore="loadmore" loadmoreoffset=10 :show-scrollbar="false">
             <cell ref="listTop"></cell>
             <cell v-for="item in goods">
-                <text style="height:150px;">{{item.productName}}</text>
+                <goods-item :goods="item"></goods-item>
             </cell>
         </list>
         <wxc-popup :show="isRightShow" :animation="{duration:150}" :overlay-cfg="{opacity:0.2,duration:150}" @wxcPopupOverlayClicked="popupOverlayRightClick"
@@ -18,9 +18,9 @@
 <script>
     import navigator from '../../../plugins/navigator'
     import FiltersBar from './components/filtersBar.vue'
-    // import FilterPanel from './components/filter/app.vue'
     import FilterPanel from '../../components/FilterPanel/app.vue'
     import StatusBar from '../../components/StatusBar.vue'
+    import GoodsItem from '@/components/GoodsItem02.vue'
 
     import { WxcPopup, WxcButton, WxcStepper } from 'weex-ui'
     import { mapState, mapActions } from 'vuex'
@@ -102,7 +102,8 @@
             WxcPopup,
             WxcButton,
             WxcStepper,
-            StatusBar
+            StatusBar,
+            GoodsItem
         }
     }
 </script>
@@ -175,5 +176,9 @@
 
     .text38 {
         font-size: 38px;
+    }
+
+    .goods-cell{
+        width: 348px;
     }
 </style>
