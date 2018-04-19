@@ -5,7 +5,7 @@
         <list class="flex-1" @loadmore="loadmore" loadmoreoffset=10 :show-scrollbar="false">
             <cell ref="listTop"></cell>
             <cell v-for="item in goods">
-                <goods-item :goods="item"></goods-item>
+                <goods-item :goods="item" @onclick="gotoDetail(item.productId)"></goods-item>
             </cell>
         </list>
         <wxc-popup :show="isRightShow" :animation="{duration:150}" :overlay-cfg="{opacity:0.2,duration:150}" @wxcPopupOverlayClicked="popupOverlayRightClick"
@@ -91,6 +91,9 @@
                 this.isRightShow = false
                 this.conditionsBackup = Object.assign(this.conditionsBackup, { filterData: v })
                 this.fetchGoodsData(this.conditionsBackup)
+            },
+            gotoDetail(gid) {
+                navigator.push('detail', { id: gid })
             },
             ...mapActions({
                 fetchGoodsData: 'list/fetchGoodsData'
@@ -178,7 +181,7 @@
         font-size: 38px;
     }
 
-    .goods-cell{
+    .goods-cell {
         width: 348px;
     }
 </style>

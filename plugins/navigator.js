@@ -1,7 +1,6 @@
 const navigator = weex.requireModule('navigator')
 const storage = weex.requireModule('storage')
-// const baseUrl = 'http://192.168.31.10:8081'
-const baseUrl = 'http://10.100.0.39:8081'
+const baseUrl = weex.config.bundleUrl.replace(/(.+\/\/)(.+?)\/.+/, "$1$2")
 export default {
     back() {
         if (typeof window === 'object') {
@@ -34,7 +33,8 @@ export default {
                         // 小程序webview
                     } else {
                         // 普通web
-                        navigator.push({ url: `${baseUrl}/${page}.html` })
+                        // navigator.push({ url: `${baseUrl}/${page}.html` })
+                        navigator.push({ url: `/${page}.html` })
                     }
                 } else {
                     // weex 内

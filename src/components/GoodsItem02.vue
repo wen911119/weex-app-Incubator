@@ -1,5 +1,5 @@
 <template>
-    <div class="goods-item-02 flex flex-row">
+    <div class="goods-item-02 flex flex-row" @click="$emit('onclick')">
         <image :src="goods.imgUrl_300_300.replace('pic.banggo', 'pic.ruiyun2015').replace('w_300', 'w_160').replace('h_300', 'h_160').replace('m_lfit', 'm_fill')"
             class="goods-img"></image>
         <div class="desc flex-1 flex flex-column">
