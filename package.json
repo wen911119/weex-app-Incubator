@@ -20,7 +20,8 @@
     "android": "weex run android",
     "pack:ios": "npm run clean:ios && weex build ios",
     "pack:android": "npm run clean:android && weex build android",
-    "pack:web": "npm run clean:web && npm run build:release"
+    "pack:web": "npm run clean:web && npm run build:release",
+    "gen":"node copy.js"
   },
   "keywords": [
     "weex"
