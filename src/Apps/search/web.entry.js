@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import weex from 'weex-vue-render';
 import Vuex from 'vuex'
-
+import { Base64 } from 'js-base64'
 Vue.use(Vuex)
 weex.init(Vue);
 import _store from './store/index.js'
@@ -12,18 +12,14 @@ const myMixin = {
     methods: {
         $getNavigatorInfo() {
             return new Promise(function (resolve, reject) {
-                const storage = weex.requireModule('storage')
-                storage.getItem('_navigator_data_', function (e) {
-                    if (e.result === 'success') {
-                        try {
-                            resolve(JSON.parse(e.data))
-                        }catch(err){
-                            reject(err)
-                        }
-                    } else {
-                        reject()
-                    }
-                })
+                let data = {}
+                try {
+                    let initInfo = weex.config.bundleUrl.replace(/.+init=(.+)/, "$1")
+                    initInfo = Base64.decode(initInfo)
+                    data = JSON.parse(initInfo)
+                } catch (e) {
+                }
+                resolve(data)
             })
         }
     }
