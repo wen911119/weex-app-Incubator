@@ -1,5 +1,6 @@
 <template>
     <div class="flex flex-x-center">
+        <text>new app</text>
         <text>{{count}}</text>
         <wxc-button text="加加加" @wxcButtonClicked="add(1)"></wxc-button>
     </div>
