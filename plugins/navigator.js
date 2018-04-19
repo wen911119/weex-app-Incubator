@@ -26,7 +26,7 @@ export default {
             // web 环境
             if (window.self != window.top) {
                 // 在 iframe 中
-                window.parent.postMessage(page, '*')
+                window.parent.postMessage(`${page}?init=${dataBase64}`, '*')
             } else if (false) {
                 // 小程序webview
             } else {
