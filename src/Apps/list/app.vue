@@ -2,12 +2,16 @@
     <div class="flex flex-column">
         <status-bar bgColor="#f7f7f7"></status-bar>
         <filters-bar @filter="openRightPopup" @filterChange="filterChange" @switch="toggleListType"></filters-bar>
-        <list class="flex-1" @loadmore="loadmore" loadmoreoffset=10 :show-scrollbar="false">
+        <list ref="list" class="flex-1" @loadmore="loadmore" loadmoreoffset=10 :show-scrollbar="false">
             <cell ref="listTop"></cell>
             <cell v-for="item in goods">
                 <goods-item :goods="item" @onclick="gotoDetail(item.productId)"></goods-item>
             </cell>
+            <cell ref="listBottom">
+                <UC-scroll-fix></UC-scroll-fix>
+            </cell>
         </list>
+
         <wxc-popup :show="isRightShow" :animation="{duration:150}" :overlay-cfg="{opacity:0.2,duration:150}" @wxcPopupOverlayClicked="popupOverlayRightClick"
             pos="right" width="645">
             <filter-panel :keyword="conditionsBackup.keyword" class="flex-1" @confirm="applyFilter"></filter-panel>
@@ -21,7 +25,7 @@
     import FilterPanel from '../../components/FilterPanel/app.vue'
     import StatusBar from '../../components/StatusBar.vue'
     import GoodsItem from '@/components/GoodsItem02.vue'
-
+    import UCScrollFix from '@/components/UCScrollFix.vue'
     import { WxcPopup, WxcButton, WxcStepper } from 'weex-ui'
     import { mapState, mapActions } from 'vuex'
 
@@ -62,6 +66,7 @@
             }).catch(function (e) {
                 console.log(e)
             })
+
         },
         methods: {
             applyFilter(filter) {
@@ -106,7 +111,8 @@
             WxcButton,
             WxcStepper,
             StatusBar,
-            GoodsItem
+            GoodsItem,
+            UCScrollFix
         }
     }
 </script>
@@ -183,5 +189,73 @@
 
     .goods-cell {
         width: 348px;
+    }
+
+    .loader {
+        font-size: 10px;
+        margin: 50px auto;
+        text-indent: -9999em;
+        width: 11em;
+        height: 11em;
+        border-radius: 50%;
+        background: #ffffff;
+        background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+        background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+        background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+        background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+        background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+        position: relative;
+        -webkit-animation: load3 1.4s infinite linear;
+        animation: load3 1.4s infinite linear;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    .loader:before {
+        width: 50%;
+        height: 50%;
+        background: #ffffff;
+        border-radius: 100% 0 0 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+    }
+
+    .loader:after {
+        background: #0dc5c1;
+        width: 75%;
+        height: 75%;
+        border-radius: 50%;
+        content: '';
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+
+    @-webkit-keyframes load3 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes load3 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
     }
 </style>

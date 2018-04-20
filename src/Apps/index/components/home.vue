@@ -10,18 +10,7 @@
                     </div>
                 </slider>
                 <panel ref="panel" template="wap_index_banner1" id="375" @update="panelUpdate"></panel>
-                <!-- <div class="flex-x-center">
-                    <div class="hold">
-                        <text class="list-item" v-for="item of test" @click="goto">{{item}}</text>
-                    </div>
-                    <goto target="list">
-                        <text>跳转到list页</text>
-                    </goto>
-                    <text @click="goto">跳到第二页</text>
-                    <text>testAlert{{count}}</text>
-                </div>
-                <wxc-button text="Open Popup" @wxcButtonClicked="buttonClicked"></wxc-button>
-                <wxc-popup width="500" pos="left" :show="isShow" @wxcPopupOverlayClicked="overlayClicked"></wxc-popup> -->
+                <UC-scroll-fix></UC-scroll-fix>
             </scroller>
         </div>
     </div>
@@ -34,7 +23,7 @@
     import Goto from '@/components/Goto'
     import navigator from '../../../../plugins/navigator'
     import StatusBar from '../../../components/StatusBar.vue'
-
+    import UCScrollFix from '@/components/UCScrollFix.vue'
     export default {
         data() {
             return {
@@ -89,7 +78,8 @@
             WxcButton,
             WxcPopup,
             Goto,
-            StatusBar
+            StatusBar,
+            UCScrollFix
         }
     }
 </script>
