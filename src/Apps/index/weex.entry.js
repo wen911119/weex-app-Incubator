@@ -1,6 +1,7 @@
 import App from './app.vue';
 import Vuex from 'vuex'
 Vue.use(Vuex)
+import { Base64 } from 'js-base64'
 /* weex initialized here, please do not move this line */
 /* eslint-disable no-new */
 import _store from './store/index.js'
