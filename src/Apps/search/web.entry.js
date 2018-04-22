@@ -13,11 +13,24 @@ const myMixin = {
         $getNavigatorInfo() {
             return new Promise(function (resolve, reject) {
                 let data = {}
-                try {
-                    let initInfo = weex.config.bundleUrl.replace(/.+init=(.+)/, "$1")
-                    initInfo = Base64.decode(initInfo)
-                    data = JSON.parse(initInfo)
-                } catch (e) {
+                if (weex.config.env.userAgent.indexOf('MicroMessenger') > -1) {
+                    // 小程序内
+                    const page = weex.config.bundleUrl.replace(/.+\/(.+)\.html/, "$1")
+                    const initInfo = localStorage.getItem(`${page}_init_info`)
+                    if (initInfo) {
+                        try {
+                            data = JSON.parse(initInfo)
+                        } catch (e) {
+
+                        }
+                    }
+                } else {
+                    try {
+                        let initInfo = weex.config.bundleUrl.replace(/.+init=(.+)/, "$1")
+                        initInfo = Base64.decode(initInfo)
+                        data = JSON.parse(initInfo)
+                    } catch (e) {
+                    }
                 }
                 resolve(data)
             })

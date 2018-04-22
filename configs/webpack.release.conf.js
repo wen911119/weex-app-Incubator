@@ -32,7 +32,7 @@ const generateMultipleEntrys = (entry) => {
       isDevServer: true,
       chunksSortMode: 'dependency',
       inject: true,
-      chunks: [name],
+      chunks: ['vendor',name],
       // production
       minimize: true
     })
@@ -118,11 +118,24 @@ const productionConfig = webpackMerge(commonConfig[0], {
      *
      * See: https://github.com/ampedandwired/html-webpack-plugin
      */
-    new HtmlWebpackPlugin({
-      template: 'web/index.html',
-      chunksSortMode: 'dependency',
-      inject: 'head'
-    }),
+    // new HtmlWebpackPlugin({`
+    //   template: 'web/index.html',
+    //   chunksSortMode: 'dependency',
+    //   inject: 'head'
+    // }),
+    new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks (module) {
+          // any required modules inside node_modules are extracted to vendor
+          return (
+            module.resource &&
+            /\.js$/.test(module.resource) &&
+            module.resource.indexOf(
+              path.join(__dirname, '../node_modules')
+            ) === 0
+          )
+        }
+      }),
     /*
      * Plugin: ScriptExtHtmlWebpackPlugin
      * Description: Enhances html-webpack-plugin functionality

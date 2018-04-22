@@ -1,6 +1,6 @@
 
 // var base_url = process.env.API_URL
-const base_url = '/api'
+const base_url = '//api.ruiyun2015.com'
 
 function LOADING() {
 

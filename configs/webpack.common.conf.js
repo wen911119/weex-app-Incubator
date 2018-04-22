@@ -58,8 +58,7 @@ const plugins = [
 // Config for compile jsbundle for web.
 const webConfig = {
   entry: {
-    ...webEntry,
-    'vendor': [path.resolve('node_modules/phantom-limb/index.js')]
+    ...webEntry
   },
   output: {
     path: helper.rootNode('./dist'),

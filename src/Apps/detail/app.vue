@@ -1,6 +1,7 @@
 <template>
     <div class="flex flex-x-center">
         <text>new app</text>
+        <text>{{gid}}</text>
         <text>{{count}}</text>
         <wxc-button text="加加加" @wxcButtonClicked="add(1)"></wxc-button>
     </div>
@@ -15,11 +16,18 @@
         name: 'App',
         data() {
             return {
+                gid:''
             }
         },
         computed: {
             ...mapState({
                 count: state => state.count
+            })
+        },
+        mounted(){
+            let self = this
+            this.$getNavigatorInfo().then(function (data) {
+                self.gid = data.id
             })
         },
         methods: {
