@@ -1,7 +1,7 @@
 const navigator = weex.requireModule('navigator')
 const storage = weex.requireModule('storage')
 import { Base64 } from 'js-base64'
-const baseUrl = weex.config.bundleUrl.replace(/(.+\/\/)(.+?)\/.+/, "$1$2")
+const baseUrl = weex.config.bundleUrl.replace(/(.+)\/.+\.j.+/, "$1")
 export default {
     back() {
         if (typeof window === 'object') {
@@ -41,7 +41,7 @@ export default {
             }
         } else {
             // weex 内
-            navigator.push({ url: `${baseUrl}/dist/${page}.js?init=${dataBase64}` })
+            navigator.push({ url: `${baseUrl}/${page}.js?init=${dataBase64}` })
         }
     }
 }
