@@ -33,25 +33,6 @@
     }
 </script>
 
-<style>
-    .flex {
-        display: flex;
-    }
-
-    .flex-1 {
-        flex: 1;
-    }
-
-    .flex-h-center {
-        justify-content: center;
-    }
-
-    .flex-v-center {
-        align-items: center;
-    }
-
-    .flex-x-center {
-        justify-content: center;
-        align-items: center;
-    }
+<style scoped>
+    
 </style>

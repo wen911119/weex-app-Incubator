@@ -166,7 +166,7 @@ const weexConfig = {
       {
         test: /\.vue(\?[^?]+)?$/,
         use: [{
-          loader: 'weex-loader',
+          loader: 'weex-loader2', // 用我自己的修改过的loader，为了全局样式
           options: vueLoaderConfig({useVue: false})
         }]
       }
