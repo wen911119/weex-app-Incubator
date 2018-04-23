@@ -138,7 +138,7 @@ const weexConfig = {
   entry: weexEntry,
   output: {
     path: path.join(__dirname, '../dist'),
-    filename: '[name].js'
+    filename: '[name].[hash].js'
   },
   /**
    * Options affecting the resolving of modules.
