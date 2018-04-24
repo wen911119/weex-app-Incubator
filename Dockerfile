@@ -7,6 +7,7 @@ ADD /web /web
 ADD .babelrc .babelrc
 ADD .postcssrc.js .postcssrc.js
 ADD package.json package.json
+ADD webpack.config.js webpack.config.js
 RUN cnpm install
 RUN npm run build:release
 RUN ls
