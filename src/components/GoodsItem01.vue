@@ -74,7 +74,7 @@
         },
         methods: {
             select() {
-                this.$emit('click', this.id)
+                this.$emit('onselect', this.id)
             },
             ...mapActions({
                 fetchGoodsDetail: '_goods_/fetchGoodsDetail'

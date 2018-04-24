@@ -99,7 +99,7 @@
                     <text class="text34" style="color:#6e6e6e;">———&nbsp;热销商品&nbsp;———</text>
                 </div>
                 <div class="hot-list flex flex-row" style="flex-wrap: wrap;justify-content: space-around;">
-                    <goods-item01 v-for="goodsId in panel.content" :id="goodsId" :key="goodsId"></goods-item01>
+                    <goods-item01 v-for="goodsId in panel.content" :id="goodsId" :key="goodsId" @onselect="onSelect"></goods-item01>
                 </div>
             </div>
             <div class="template wap_index_zhuxian" v-if="panel.template==='wap_index_zhuxian' && panel.content.length>0">
@@ -172,6 +172,9 @@
                         }
                     }
                 })
+            },
+            onSelect(id) {
+                navigator.push('detail', { id })
             }
         },
         components: {
