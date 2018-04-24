@@ -12,16 +12,15 @@ RUN cnpm install
 RUN npm run build:release
 RUN ls
 
-# 基础镜像
-FROM nginx:stable-alpine
-# 维护者信息
-LABEL maintainer="wen911119@gmail.com"
+# 第二阶段上传
+FROM quanchengec/oss-uploader:latest
+COPY --from=builder /release/web /bundle
+ADD /web/web-app-shell.html /bundle/web-app-shell.html
+# 低权限key上传
+ARG region=oss-cn-shanghai
+ARG accessKeyId=LTAIxztVmfrlIKKp
+ARG accessKeySecret=DvBimmTJCJ0aFPpgy2majGkrhJa4G4
+ARG bucket=ruiyun-app-banggo
+RUN ls /bundle
+RUN node index.js
 
-COPY --from=builder /release/web /usr/share/nginx/html/
-
-ADD nginx.conf /etc/nginx/conf.d/default.conf
-ADD start-nginx.sh /root/start-nginx.sh
-
-EXPOSE 80
-
-CMD ["/bin/sh", "/root/start-nginx.sh"]
