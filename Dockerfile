@@ -6,7 +6,6 @@ ADD /src /src
 ADD /web /web
 ADD .babelrc .babelrc
 ADD .postcssrc.js .postcssrc.js
-ADD index.html index.html
 ADD package.json package.json
 RUN cnpm install
 RUN npm run build:release
