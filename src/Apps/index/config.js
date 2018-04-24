@@ -40,6 +40,6 @@ export default {
       iconFontMarginBottom: 4,
       iconFontColor: '#333333',
       activeIconFontColor: '#f8584f',
-      iconFontUrl: 'http://s.banggo.com/pub1/bgwap/public/icon/bgwap-iconfont.ttf?20170904'
+      iconFontUrl: 'https://ruiyun-assets.oss-cn-shanghai.aliyuncs.com/font/bgwap-iconfont.ttf'
     }
   }

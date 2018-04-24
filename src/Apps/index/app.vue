@@ -38,7 +38,7 @@
             const domModule = weex.requireModule('dom')
             domModule.addRule('fontFace', {
                 'fontFamily': "iconfont",
-                'src': "url('http://s.banggo.com/pub1/bgwap/public/icon/bgwap-iconfont.ttf?20170904')"
+                'src': "url('https://ruiyun-assets.oss-cn-shanghai.aliyuncs.com/font/bgwap-iconfont.ttf')"
             })
         },
         created() {
