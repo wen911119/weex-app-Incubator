@@ -13,14 +13,15 @@ RUN npm run build:release
 RUN ls
 
 # 第二阶段上传
-FROM quanchengec/oss-uploader:latest
+FROM wen911119/oss-uploader:latest
 COPY --from=builder /release/web /bundle
 ADD /web/web-app-shell.html /bundle/web-app-shell.html
 # 低权限key上传
 ARG region=oss-cn-shanghai
-ARG accessKeyId=LTAIxztVmfrlIKKp
-ARG accessKeySecret=DvBimmTJCJ0aFPpgy2majGkrhJa4G4
+ARG accessKeyId=pKKIlrfmVtzxIATL
+ARG accessKeySecret=4G4aJhrkGjam2ygpPFa0JCJTmmiBvD
 ARG bucket=ruiyun-app-banggo
+ARG targetDir=/
 RUN ls /bundle
 RUN node index.js
 
