@@ -9,7 +9,7 @@ export default {
             if (window.self != window.top) {
                 // 在 iframe 中
                 window.parent.postMessage('_back_', '*')
-            } else if (weex.config.env.userAgent.indexOf('MicroMessenger') > -1) {
+            } else if (typeof wx !== 'undefined' && wx.miniProgram) {
                 // 小程序webview
                 wx.miniProgram.navigateBack()
             } else {
@@ -28,7 +28,7 @@ export default {
             if (window.self != window.top) {
                 // 在 iframe 中
                 window.parent.postMessage(`${page}?init=${dataBase64}`, '*')
-            } else if (weex.config.env.userAgent.indexOf('MicroMessenger') > -1) {
+            } else if (typeof wx !== 'undefined' && wx.miniProgram) {
                 // 小程序webview
                 localStorage.setItem(`${page}_init_info`, JSON.stringify(data))
                 wx.miniProgram.navigateTo({

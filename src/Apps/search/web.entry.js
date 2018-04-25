@@ -13,9 +13,9 @@ const myMixin = {
         $getNavigatorInfo() {
             return new Promise(function (resolve, reject) {
                 let data = {}
-                if (weex.config.env.userAgent.indexOf('MicroMessenger') > -1) {
+                if (typeof wx !== 'undefined' && wx.miniProgram) {
                     // 小程序内
-                    const page = weex.config.bundleUrl.replace(/.+\/(.+)\.html/, "$1")
+                    const page = weex.config.bundleUrl.replace(/.+\/(.+)\.html.+/, "$1")
                     const initInfo = localStorage.getItem(`${page}_init_info`)
                     if (initInfo) {
                         try {
