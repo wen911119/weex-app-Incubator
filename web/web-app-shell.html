@@ -190,7 +190,7 @@
             document.getElementsByTagName('style')[0].innerHTML += cssFragment
             appsBox.style.width = deviceWidth + 'px'
         }
-
+        // performance.navigation.TYPE_BACK_FORWARD(2):页面是通过“后退”或“前进”按钮打开的
         window.addEventListener('popstate', function (e) {
             backOrForward()
         }, false);
