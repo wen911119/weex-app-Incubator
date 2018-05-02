@@ -2,6 +2,7 @@
     <scroller>
         <div class="item flex flex-x-center" v-for="item in items" :key="item" @click="go">
             <text>{{item}}</text>
+            <text>click</text>
         </div>
     </scroller>
 </template>
